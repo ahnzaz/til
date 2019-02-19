@@ -1,4 +1,6 @@
 # Subsume JSON (a.k.a JSON ⊂ ECMASCript)
+## Definition
+- https://github.com/tc39/proposal-json-superset
 ## Status
 - 2019.02.19 기준 Stage-4, ES2019에 표준으로 도입될 예정
 ## 도입 근거
