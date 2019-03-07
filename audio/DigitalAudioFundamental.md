@@ -12,8 +12,27 @@ Y축의 0의 값을 주변 공기의 평균적인 기압이다. 진폭은 기압
 [OscillatorNode를 이용한 순음 출력 WebApp](https://webaudioapi.com/samples/oscillator/)
 
 반대로 여러 주파수 성분이 섞인 음은 '복합음(Complex sound)'라 하여 일상 생활의 대부분의 소리가 해당한다.
-## Representation of sound
-### dB? dBFS? LKFS?
+## Representation of audio system
+### dB?
+B(Bell)은 전화기의 발명가 그레이엄 벨의 Bell 연구소에서 상대 단위로 B를 사용한 것에서 유래한다.
+
+사회에서 일반적으로 소리의 크기를 나타낼 때 사용하는 dB는 사실 후술할 dBSPL의 약어로 절대단위이다. 그러나 공학에서 B는 기준점이 없는 한 의미가 없는 상대 단위이다.
+
+두 전력 값을 ![P_1](https://latex.codecogs.com/svg.latex?P_1), ![P_2](https://latex.codecogs.com/svg.latex?P_2)라 할 때, B는 아래와 같은 형식으로 표현된다.
+
+![L_{B}=\log_{10}\frac{P_1}{P_0}](https://latex.codecogs.com/svg.latex?L_{B}=\log_{10}\frac{P_1}{P_0})
+
+계산이 편하도록 양 변에 10을 곱해 dB 단위를 정의한다.
+
+![L_{dB}=10\log_{10}\frac{P_1}{P_0}](https://latex.codecogs.com/svg.latex?L_{dB}=10\log_{10}\frac{P_1}{P_0})
+
+즉 ![L_{b}=\log_{10}\frac{P_1}{P_0}](https://latex.codecogs.com/svg.latex?10dB=1B) 이다.
+
+오디오 분야에서는 전력, 음압(dBSPL), 게인(Gain), 감쇄(Attenuation), 잡음비(SNR), 다이나믹 레인지(Dynamic range)등 상대적인 크기를 간단하게 표현할 수 있어 널리 쓰이고 있다.
+
+### dBFS
+### LKFS
+### Dynamic range
 ## Convert sound to signal
 ### Microphone
 ### Speaker
