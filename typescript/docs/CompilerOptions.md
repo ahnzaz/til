@@ -12,5 +12,8 @@ Specify module code generation. Compile된 코드가 module을 다루는 방식�
 ### Issue
 "commonjs"로 지정하지 않으니 node_module의 module들은 찾을 수 없다고 compiler error가 뜬다.
 해당 모듈이 typescript의 type을 지원하지 않기 때문인가 싶기도 한데 vue의 내부를 뒤져보니 types를 지원한다. 그럼 문제가 뭐지?
+moduleResoltion을 "classic"이 아닌 "node"로 지정하니 위 이슈는 해결된다.
+
+ts-loader를 통해서 compile시 module resolve가 되지 않는 이슈는 resolve.extension의 확장자에서 .을 빼먹어서 그렇네.
 
 webpack의 external option처럼 외부 의존성의 경우 compile에서 스킵하려면 어떻게 해야 하지?
