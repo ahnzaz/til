@@ -1,23 +1,29 @@
+class Foo{
+    constructor(){
+        
+    }
 
-interface Crab{
+    public foo1(){
+        
+    }
 
+    public foo2(){
+
+    }
 }
 
-interface Bird{
-    fly();
-    egg():Crab;
+class Bar{
+    constructor(){
+        
+    }
+
+    public bar1(){
+
+    }
+
+    public bar2(){
+
+    }
 }
 
-interface Animal{
-    egg():Animal;
-    cantFly();
-}
-
-function foo():Bird|Animal{
-    const returnValue:Bird = null;
-
-    return returnValue;
-}
-
-const value = foo();
-const son = value.egg();
+const myFoo = ((new Bar() as unknown) as Foo);

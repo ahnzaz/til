@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+
+<body>
+    <div id='container'></div>
+    <script type='text/javascript'>
+    const ReadyState=[
+        '0:HAVE_NOTING',
+        '1:HAVE_METADATA',
+        '2:HAVE_CURRENT_DATA',
+        '3:HAVE_FUTURE_DATA',
+        '4:HAVE_ENOUGHT_DATA',
+    ];
+
+    const NetworkState = [
+        '0:NETWORK_EMPTY',
+        '1:NETWORK_IDLE',
+        '2:NETWORK_LOADING',
+        '30:NETWORK_NO_SOURCE',
+    ]
+    const events = [
+        'loadstart',
+        'progress',
+        'canplay',
+        'canplaythrough',
+        'loadedmetadata',
+        'loadeddata',
+        'play',
+        'playing',
+        'seeked',
+        'seeking',
+        'paused',
+        'readystatechange',
+    ]
+    const video = document.createElement('video');
+    document.querySelector('body').appendChild(video);
+    video.controls = true;
+    video.muted = true;
+    video.preload = 'none';
+    // video.autoplay = true;
+    video.src = 'https://www.w3schools.com/html/mov_bbb.mp4';
+    events.forEach(event=>{
+        video.addEventListener(event, event=>{
+            console.log({
+                eventType : event.type,
+                readyState : ReadyState[video.readyState],
+                networkState : NetworkState[video.networkState],
+            })
+        });
+    });
+    </script>
+</body>
+
+</html>

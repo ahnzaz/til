@@ -1,0 +1,7 @@
+{
+    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
+    "files.exclude": {
+        "**/*.js: { \"when\": \"$(basename).ts\" }": true
+    },
+    "typescript.tsdk": "node_modules\\typescript\\lib"
+}
