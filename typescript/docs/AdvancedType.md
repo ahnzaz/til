@@ -1,4 +1,4 @@
-[source](https://www.typescriptlang.org/docs/handbook/advanced-types.html)
+[Documentation source](https://www.typescriptlang.org/docs/handbook/advanced-types.html)
 
 # Advanced Types
 Typescript가 지원하는 고급 타입형에 대해 설명한다.
@@ -167,6 +167,108 @@ sn = null;  // possible
 sb = undefined; // Error
 ```
 Typescript에서도 Javascript와 동일하게 ```null```과 ```undefined```는 별도로 취급됩니다. 즉 ```string|null|```과 ```string|undefined```, ```string|undefined|null```은 모두 별개입니다.
+
+### [Type guards and type assertions](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-type-assertions)
+Nullable type은 union을 기반으로 구현되었으므로 type guard를 통해 null을 제거할 수 있다.
+```typescript
+function f(sn:string|nulll):string{
+    if(sn === null){
+        return "default";
+    }
+    else{
+        return sn;
+    }
+}
+```
+
+더 간단한 연산자로도 가능합니다.
+```typescript
+function f(sn:string|null):string{
+    return sn || "default";
+}
+```
+
+Compiler가 ```null``` 또는 ```undefined```를 제거할 수 없을 때 코드상에서 type assertion operator를 통해 강제로 제거할 수 있다. ```! : identifier!```는 ```identifier``` type에서 null, undefined를 제거하고 사용할 수 있게 해준다.
+ES spec의 ```identifier?```와 유사한 듯
+
+```typescript
+function fixed(name:string|null):string{
+    function postfix(epithet:string):string{
+        return name!.charAt(0) + '. the ' + epithet;
+    }
+    name = name || 'Bob';
+    return postfix("great");
+}
+```
+예시에서 nested function을 사용하였는데 이는 compiler가 nested function은 외부에서 호출되지 않는 한 parameter check 등이 불가능하므로 compiler로 하여금 타입 체킹이 불가능 하도록 하기 위함이다.
+
+## [Type aliases](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases)
+새로운 Type name을 정의한다. Interface와 유사하지만 primitive, union, tuples을 포함한 어떤 타입도 재정의가 가능하다.
+```typescript
+type Name = string;
+type NameResolver = ()=>string;
+type NameOrResolver = Name | NameResolver;
+function getName(n:NameOrResolver):Name{
+    if(typeof n === "string"){
+        return n;
+    }else{
+        return n();
+    }
+}
+```
+Aliasing이 새로운 타입을 생성하는 것은 아니다. 단지 정의된 타입을 참조하는 이름을 만들 뿐이다. Primitive를 aliasing 하는 것은 documentation 이외에는 별로 유용하지 않다.
+
+Type aliasing역시 generic 사용 가능하다.
+```typescript
+type Container<T> = {value : T};
+```
+```typescript
+type Tree<T> = {
+    value: T;
+    left : Tree<T>;
+    right : Tree<T>;
+}
+```
+
+Intersection type과 혼용하면, 신기한 type도 정의할 수 있다.
+```typescript
+type LinkedList<T> = T & {next : LinkedList<T>};
+interface Person{
+    name : string
+}
+
+var people:LinkedList<Person>;
+var s = people.name;
+var s = people.next.name;
+var s = people.next.next.name;
+var s = people.next.next.next.name;
+```
+순환 선언은 불가능하다.
+```typescript
+type Yikes = Array<Yikes>;  // Error
+```
+
+### [Interfaces vs Type aliases](https://www.typescriptlang.org/docs/handbook/advanced-types.html#interfaces-vs-type-aliases)
+위에서 언급하였듯이 type aliasing은 인터페이스와 유사하지만 다른 점이 몇몇 있다.
+
+Interface는 어디서나 사용할 수 있는 새 타입을 생성하지만 Type aliasing은 그렇지 않다. 예를 들어 Error message에는 alias name을 사용할 수 없다.
+
+아래 코드에서 ```interfaced function```에 마우스를 올리면 ```Interface``` 인터페이스를 반환한다고 표시되지만, ```aliased function```에 마우스를 올리면 Object literal을 반환한다고 표시될 것이다.
+
+```typescript
+type Alias = { num: number }
+interface Interface {
+    num: number;
+}
+declare function aliased(arg: Alias): Alias;
+declare function interfaced(arg: Interface): Interface;
+```
+
+역주) typescript 3.5.2기준으로 aliased function도 ```Alias type```을 반환한다고 표시된다. 업데이트 된 모양이다.
+
+두 번째 더 중요한 차이점은 Type은 상속하거나 구현하거나, 반대로 상속 받거나 구현 되지도 못한다는 것이다. **소프트웨어는 확장에 대해 열려있어야 한다는 기조 아래 가능하다면 Type 대신에 Interface를 사용해야 한다.**
+
+다른 한편 인터페이스로는 특정 형태를 설명할 수 없고 union이나 tuple type을 사용해야 한다면 type aliasing이 좋은 방법이다.
 
 - Partial class
 - Required class
