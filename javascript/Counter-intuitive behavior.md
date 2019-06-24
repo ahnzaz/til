@@ -1,0 +1,1 @@
+## [Function.prototype.bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)를 두 번 이상 호출하면 Javascript code 로직이 native scope로 전환된다. 함수 내용을 알 수 없게 됨. -> 난독화에 유용할 듯 함
