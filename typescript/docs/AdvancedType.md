@@ -270,6 +270,119 @@ declare function interfaced(arg: Interface): Interface;
 
 다른 한편 인터페이스로는 특정 형태를 설명할 수 없고 union이나 tuple type을 사용해야 한다면 type aliasing이 좋은 방법이다.
 
+### [String literal type](https://www.typescriptlang.org/docs/handbook/advanced-types.html#string-literal-types)
+String literal type은 정확히 동일한 문자열의 값만 할당할 수 있는 type을 정의합니다.
+```typescript
+type Easing = "ease-in" | "ease-out" | "ease-in-out"
+class UIElement{
+    animate(dx:number, dy:number, easing:Easing){
+        if(easing === "ease-in"){
+            
+        }else{
+
+        }
+    }
+}
+let button = new UIelement();
+button.animate(0, 0, "easi-in");
+button.animate(0, 0, "uneasy");
+```
+
+### [Numeric literal types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#numeric-literal-types)
+수형 타입도 선언이 가능하다.
+```typescript
+function rollDice():1|2|3|4|5|6{
+    ///
+}
+```
+
+### [Enum member types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#enum-member-types)
+Enum 멤버는 모든 멤버가 literal-초기화 될 때 타입을 갖게 된다.
+
+### [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/advanced-types.html#discriminated-unions)
+Singleton type, union type, type guard, type alias 등을 조합하여 Discriminated union이라는 복잡한 타입을 정의할 수 있습니다. Tagged union 또는 algebra data type이라 불리는 개념입니다. 함수형 프로그래밍에 매우 유용합니다. Typescript는 javascript 패턴을 구현하기 위해 빌드하였습니다.
+1. Type은 일반적으로 하나의 타입을 가집니다. - discriminant
+2. Type alias는 타입들을 union합니다. - union
+3. 일반적인 속성에 대한 type guard
+
+```typescript
+interface Square{
+    kind:"square",
+    size:number,
+}
+
+interface Rectangle{
+    kind:"rectangle",
+    width:number,
+    height:number,
+}
+
+interface Circle{
+    kind:"Circle",
+    radius:number,
+}
+```
+먼저 union할 인터페이스를 선언합니다. 각 인터페이스는 ```kind```라는 다른 string literal type을 갖는 속성을 가지고 있습니다. ```kind``` property는 discriminant 또는 tag라 불립니다. 다른 속성들은 인터페이스마다 다릅니다. 각 인터페이스들이 현재는 상관관계가 없다는 점에 주목하세요. 이제 union합니다.
+
+```typescript
+type Shape = Square | Rectangle | Circle;
+```
+
+이제 discriminated union을 사용할 수 있습니다.
+```typescript
+function area(s: Shape) {
+  switch (s.kind) {
+    case "circle":
+      return Math.PI * s.radius ** 2;
+    case "rectangle":
+      return s.height * s.width;
+    case "square":
+      return s.size * s.size;
+  }
+}
+```
+
+#### Exhaustiveness checking
+Discriminated union에 대해 모두 체크하지 않았을 경우 compiler가 개발자에게 에러로 알려주게 할 수 있습니다. 위의 예제에서 Shape에 Triangle을 추가하였을 경우 area function에서 triangle을 처리하지 않았으므로 에러가 발생해야 하죠.
+
+두 가지 방법이 있습니다 첫번째는 ```--strictNullChecks``` flag를 켜고 return type을 명시하는 것이죠
+
+```typescript
+function area(s: Shape):number {    // error: returns number | undefined
+  switch (s.kind) {
+    case "circle":
+      return Math.PI * s.radius ** 2;
+    case "rectangle":
+      return s.height * s.width;
+    case "square":
+      return s.size * s.size;
+  }
+}
+```
+```switch``` 구문이 더 이상 완벽하지 않으므로 Typescript compiler는 area function이 undefined를 반환할 수 있음을 인지하고 있습니다. 실제 반환값이 ```number | undefined```이므로 area function의 return type을 ```number```로만 선언할 경우 return type error를 발생합니다.
+
+두 번째 방법은 ```never``` type을 사용하여 compiler에게 exhaustivenss를 체크하도록 하는 방법입니다.
+```typescript
+function assertNever(x:never):never{
+    throw new Error("Unexpected object" + x);
+}
+
+function area(s: Shape):number {
+  switch (s.kind) {
+    case "circle":
+      return Math.PI * s.radius ** 2;
+    case "rectangle":
+      return s.height * s.width;
+    case "square":
+      return s.size * s.size;
+    default : return assertNever(s);    // error here if there are missing cases
+  }
+}
+```
+```assertNever``` function이 s의 타입을 ```never```로 간주합니다. case에 대한 처리를 깜빡한다면 ```s```는 실제 타입을 갖게 될 것이고 ```assertNever``` function이 에러를 뱉게 됩니다. 이 방법은 추가적인 function 정의가 필요하지만 더 명확한 방법입니다.
+
+
+### TODO
 - Partial class
 - Required class
 - Omit class
