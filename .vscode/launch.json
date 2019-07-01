@@ -8,7 +8,10 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\tsconfig.js"
+            "program": "${workspaceFolder}\\typescript\\src\\typescript-index.ts",
+            "outFiles": [
+                "${workspaceFolder}\\typescript\\dist\\*.js"
+            ]
         }
     ]
 }

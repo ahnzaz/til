@@ -1,17 +1,14 @@
 const path = require("path");
-// const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
-const PATH_SRC = 'src';
-const PATH_BUNDLED = "dist";
-const FILE_DIST = "bundle.js";
+const DIR_BUNDLED = "dist";
+const FILE_BUNDLED = "bundle.js";
 
 module.exports = {
 
     mode: "development",
 
     entry: {
-        "typescript-index.ts": "./src/typescript-index.ts",
-        // "typescript-index.js" : "./compiled/typescript-index.js",
+        "index.ts": "./src/play-index.ts",
     },
 
     resolve: {
@@ -33,13 +30,13 @@ module.exports = {
         ]
     },
 
-    externals: {
-        vue: "Vue",
-        ace: "Ace",
-    },
+    // externals: {
+    //     vue: "Vue",
+    //     ace: "Ace",
+    // },
 
     output: {
-        filename: FILE_DIST,
-        path: path.resolve(__dirname, PATH_BUNDLED),
+        filename: FILE_BUNDLED,
+        path: path.resolve(__dirname, DIR_BUNDLED),
     }
 }

@@ -1,14 +1,18 @@
 {
-  "name": "gulp-playground",
+  "name": "playground",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "play-index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^4.0.2"
+    "mocha": "^6.1.4",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.2",
+    "webpack": "^4.35.2",
+    "webpack-cli": "^3.3.5"
   }
 }
