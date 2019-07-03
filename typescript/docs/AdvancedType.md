@@ -381,11 +381,221 @@ function area(s: Shape):number {
 ```
 ```assertNever``` function이 s의 타입을 ```never```로 간주합니다. case에 대한 처리를 깜빡한다면 ```s```는 실제 타입을 갖게 될 것이고 ```assertNever``` function이 에러를 뱉게 됩니다. 이 방법은 추가적인 function 정의가 필요하지만 더 명확한 방법입니다.
 
+### [Polymorphic ```this``` type](https://www.typescriptlang.org/docs/handbook/advanced-types.html#polymorphic-this-types)
+Polymorphic ```this``` 타입은 클래스나 인터페이스를 가지고 있는 서브타입입니다. F-bounded 다형성이라 불립니다. 계층 구조의 인터페이스를 더 자연스럽게 표현하는 데 사용할 수 있습니다.
+```typescript
+class BasicCalculator{
+    public constructor(protected value:number = 0){}
+
+    public currentValue():number{
+        return this.value;
+    }
+
+    public add(operand:number):this{
+        this.value += operand;
+        return this;
+    }
+    
+    public multiply(operand:number):this{
+        this.value *= operand;
+        return this;
+    }
+}
+let v = new BasicCalculator()
+            .multiply(5)
+            .add(1)
+            .currentValue();
+```
+
+```typescript
+class ScientificCalculator extends BasicCalculator{
+    public constructor(value = 0){
+        super(value);
+    }
+
+    public sin(){
+        this.value = Math.sin(this.value);
+        return this;
+    }
+}
+
+let v = new ScientificCalculator()
+            .multiply(5)
+            .sin()
+            .add(1)
+            .currentValue();
+```
+```this``` type이 없다면 ScientificCalculator.multiply()는 ```Foo```type을 반환했을테니 ```sin()```을 호출할 수 없었을 겁니다.
+
+### [Index types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#index-types)
+Index type을 사용하면 compiler로 하여금 동적 property name을 체크할 수 있게 합니다. 예를들어 Javasript에서 속성 값을 꺼내려면 아래와 같이 해야 합니다.
+```javascript
+function pluck(o, propertyNames){
+    return propertyNames.map(n=>o[n]);
+}
+```
+
+typescript에서 **index type query**와 **indexed access**를 사용하여 어떻게 하는지 보시죠.
+```typescript
+function pluck<T, K extends keyof T>(o:T, propertyNames:K[]):T[K][]{
+    return propertyNames.map(n=>o[n]);
+}
+
+interface Car{
+    manufacturer:string;
+    model:string;
+    year:2014
+}
+
+let taxi:Car = {
+    manufacturer :'Toyota',
+    model:'Camry',
+    year:2014
+};
+
+let makeAndModel:string[] = pluck(taxi, ['manufacturer', 'model']);
+
+let modelYear = pluck(taxi, ['model','year']);
+```
+컴파일러는 manufacturer와 model이 Car의 property인지 체크합니다. 위 예제에서 두 개의 새로운 type operator가 등장하는데 첫번째는 'keyof T' **index type query operator**라 불립니다. 임의의 타입 T에 대해 keyof T는 T의 public property name의 union입니다.
+```typescript
+let carProps:keyof Car; // 'manufacturer' | 'model' | 'year'
+```
+```keyof Car```을 ```'manufacturer' | 'model' | 'year'```로 대체할 수도 있지만 ```keyof Car```는 property 추가에 자동으로 반영된다는 점입니다.
+
+두 번째 연산자는 ```T[K]```입니다. **indexed access operator**라 불리죠.
+
+```typescript
+function getProperty<T, K extends keyof T>(o:T, propertyName:K):T[K]{
+    return o[propertyName];
+}
+```
+o:T, propertyName:이기에 o[propertyName]:T[K]가 된다.
+```typescript
+let name:string = getProperty(taxi, 'manufacturer');
+let age:number = getProperty(taxi, 'model');
+```
+
+#### [Index types and string index signatures](https://www.typescriptlang.org/docs/handbook/advanced-types.html#index-types-and-string-index-signatures)
+keyof와 T[K]는 string index signature를 통해 동작합니다. string index signature를 가지고 있는 타입이 있다면 keyof T는 string일겁니다. ```T[string]```이 index signature의 type이 됩니다.
+
+```typescript
+interface Dictionary<T>{
+    [key:string]:T;
+}
+let keys:keyof Dictionary<number>;      // string
+let value:Dictionary<number>['foo'];    // number
+```
+
+### Mapped type
+기존의 타입에서 각 프로퍼티들을 optional 값으로 변경합니다.
+```typescript
+interface PersonPartial{
+    name?: string;
+    age?:number;
+}
+```
+
+```typescript
+interface PersonReadonly{
+    readonly name:string;
+    readonly age:number;
+}
+```
+typescript에서는 **mapped type**을 제공하여 이런 과정을 쉽게 구현할 수 있게 합니다. 기존 타입의 모든 property를 readonly로 변경하려면 ReadyOnly type을 사용하여 구현하면 됩니다.
+```typescript
+type ReadOnly<T> = {
+    readonly [P in keyof T]:T[P];
+}
+
+type Partial<T> = {
+    [P in keyof T]?:T[P];
+}
+```
+사용할때는 아래와 같이
+```typescript
+type PersonPartial = Partial<Person>;
+type ReadonlyPerson = ReadOnly<Person>;
+```
+이 문법은 member보다는 type 자체를 묘사합니다. member를 추가하고 싶다면 intersection type을 사용하면 됩니다.
+
+```typescript
+type PartialWithNewMember<T> = {
+    [P in keyof T]?:T[P];
+} & { newmember:boolean}
+
+// this is error
+type PartialWithNewMember<T> = {
+    [P in keyof T]?:T[P];
+    newMember :boolean;
+}
+```
+가장 간단한 형태의 mapped type을 알아봅시다.
+```typescript
+type Keys = 'option1' | 'option2';
+type Flags = {[K in Keys]:boolean};
+```
+이 문법은 ```for ... in```키워드와 index signature를 같이 쓴 경우와 유사합니다.
+    1. type 변수 K
+    2. string literal union ```Keys``` property name key union
+    3. resulting type of property.
+```typescript
+type Flags = {
+    option1:boolean;
+    option2:boolean;
+}
+```
+과 완전히 동일하다.
+
+실 케이스에서는 ReadOnly와 Partial은 이미 있는 타입과 연관되어야 하므로 속성들을 일부 변조한다.
+```typescript
+type NullablePerson = {[P in keyof Person]:Person[P]|null}
+type PartialPerson = {[P in keyof Person]?:Person[P]}
+```
+Generic을 쓰면 더 쉽다.
+```typescript
+type Nullable<T>  = {[P in keyof T]:T[P]|null};
+type Partial<T> = {[p in keyof T]?:T[P]}
+```
+index type query를 사용하여 기존의 property를 복사하게 되면 compiler가 알아서 readonly등의 property signature를 그대로 유지해 주기 때문에 아주 간편하다. 예를 들어 ```Person.name```이 readonly였다면 ```Partial<Person>.name```은 readonly & optional이 될 것이다.
+
+아래는 Proxy를 만드는 예제이다.
+```typescript
+type Proxy<T>= {
+    get():T;
+    set(value:T):void;
+}
+
+type Proxify<T> = {
+    [P in keyof T]:Proxy<T[P]>
+}
+
+function proxify<T>(o:T):Proxify<T>{
+
+}
+
+let proxyProps = proxify(props);
+```
+ReadOnly와 Partial은 typescrip 표준 라이브러리에 Pick Record과 함께 존재한다.
+```typescript
+type Pick<T, K extends keyof T> = {
+    [P in K]: T[P];
+}
+
+type Record<K extends keyof any, T> = {
+    [P in K]:T
+}
+
+```
+ReadOnly, Partial Pick은 homomorphic하지만 Record는 아니다.
+```typescript
+type ThreeStringProps = Record<'prop1' | 'prop2'|'prop3', string>
+```
+Non-homomorphic type은 근본적으로 새로운 properties를 생성한다. 그러므로 property modifier까지 복사해 오는 것은 아니다.
+
 
 ### TODO
-- Partial class
 - Required class
 - Omit class
-- Pick class
 - Exclude?
 - SubPartial?
