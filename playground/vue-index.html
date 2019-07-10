@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/vue/latest/vue.js' defer></script>
+    <script type='text/javascript' src='./dist/bundle.js' defer></script>
+</head>
+
+<body>
+    <div id='container'>
+        <core-player>
+            <core-controller>
+                <core-play-button>
+
+                </core-play-button>
+            </core-controller>
+        </core-player>
+    </div>
+    <script type='text/javascript' defer>
+        window.onload = () => {
+            const corePlayer = new window.naver.CorePlayer();
+            const playerComp = corePlayer.render('#container');
+        }
+    </script>
+</body>
+
+</html>

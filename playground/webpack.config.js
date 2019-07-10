@@ -8,7 +8,8 @@ module.exports = {
     mode: "development",
 
     entry: {
-        "index.ts": "./src/play-index.ts",
+        // "index.ts": "./src/play-index.ts",
+        "vue-index.ts": "./src/vue-index.ts",
     },
 
     resolve: {
@@ -30,10 +31,9 @@ module.exports = {
         ]
     },
 
-    // externals: {
-    //     vue: "Vue",
-    //     ace: "Ace",
-    // },
+    externals: {
+        vue: "Vue",
+    },
 
     output: {
         filename: FILE_BUNDLED,
