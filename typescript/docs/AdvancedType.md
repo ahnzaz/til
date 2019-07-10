@@ -593,9 +593,75 @@ type ThreeStringProps = Record<'prop1' | 'prop2'|'prop3', string>
 ```
 Non-homomorphic type은 근본적으로 새로운 properties를 생성한다. 그러므로 property modifier까지 복사해 오는 것은 아니다.
 
+#### [Inference from mapped type](https://www.typescriptlang.org/docs/handbook/advanced-types.html#inference-from-mapped-types)
+이제 타입 property를 wrap하는 법은 배웠습니다. unwrap은 매우 쉽습니다.
+```typescript
+function unproxify<T>(t:Proxify<T>):T{
+    let result:T = {} as T;
+    for(const k in t){
+        result[k] = t[k].get();
+    }
+
+    return result;
+}
+
+let originalProps = unproxify(proxyProps);
+```
+이런 unwrapping 추론은 자기 동형[^1] mapped type에서만 사용 가능합니다. mapped type이 자기 동형이 아닌 경우 unwrapping하기 위해선 명시적인 타입 전달이 필요합니다.
+
+### [Conditional type](https://www.typescriptlang.org/docs/handbook/advanced-types.html#conditional-types)
+Typescript 2.8부터 conditional type이 도입되었습니다. non-uniform type mapping이 가능해졌습니다. 조건절에 따라 다른 타입을 명시할 수 있게 합니다.
+
+```
+T extends U ? X : Y
+```
+
+위 type 정의는 X, Y type 또는 deffered로 결정됩니다. T나 U가 타입 변수를 가지고 있을 경우 X, Y, deffered 타입을 결정하기 위해서는 type system이 T가 항상 U에 할당될 수 있는지 판별하기 위해 충분한 근거가 있어야 합니다.
+
+```typescript
+declare function f<T extends boolean>(x:T):T extend true ? string:number;
+
+let x = f(Math.random() < 0.5);
+```
+
+```typescript
+type TypeName<T> = 
+    T extends string ? "string" :
+    T extends number ? "number" :
+    T extends boolean ? "boolean" :
+    T extends undefined ? "undefined" :
+    T extends Function ? "function" :
+    "object";
+
+type T0 = TypeName<string>;
+type T1 = TypeName<"a">;
+type T2 = TypeName<true>;
+type T3 = TypeName<()=>void>;
+type T4 = TypeName<string[]>;
+    
+```
+
+```typescript
+interface Foo{
+    propA : boolean;
+    propB : boolean;
+}
+
+declare function f<T>(x:T) : T extends Foo ? string:number;
+
+function foo<U>(x:U){
+    let a = f(x);
+    let b: string | number = a;
+}
+```
+외 예제에서 f()의 반환값은 ```string | number``` 중 결정되지 않았으므로 ``` string | number ```의 타입 선언으로 값을 할당할 수 있다.
+
 
 ### TODO
 - Required class
 - Omit class
 - Exclude?
 - SubPartial?
+
+
+[^1]: 스스로의 property를 호환 가능한
