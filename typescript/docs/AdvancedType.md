@@ -654,8 +654,17 @@ function foo<U>(x:U){
     let b: string | number = a;
 }
 ```
-외 예제에서 f()의 반환값은 ```string | number``` 중 결정되지 않았으므로 ``` string | number ```의 타입 선언으로 값을 할당할 수 있다.
+위 예제에서 f()의 반환값은 ```string | number``` 중 결정되지 않았으므로 ``` string | number ```의 타입 선언으로 값을 할당할 수 있다.
 
+### [Distributive conditional types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#distributive-conditional-types)
+Conditional type중에 checked type이 naked type인 경우에 Distributive conditional type이라고 호칭한다. Distributive conditional type은 인스턴스화 중에 자동으로 union type으로 분포된다. 예를들어 ```T extends U ? X : Y```를 T가 ```A | B | C```일때 인스턴스화하게 되면 ```A extends U ? X : Y | B extends U ? X : Y | C extends U ? X : Y```로 치환된다.
+
+```typescript
+type T10 = TypeName<string | (() => void)>; // "string" | "function"
+type T12 = TypeName<string | string[] | undefined>;  // "string" | "object" | "undefined"
+type T11 = TypeName<string[] | number[]>; // "object"
+```
+아.. 이거 뭔 말인지 영어 해석이 안되네..
 
 ### TODO
 - Required class
