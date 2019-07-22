@@ -4,12 +4,20 @@
   "description": "",
   "main": "play-index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx mocha ./src/mocha-test.ts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "mocha": "^6.1.4",
+    "@types/chai": "^4.1.7",
+    "@types/chai-as-promised": "^7.1.0",
+    "@types/chai-dom": "0.0.7",
+    "@types/chai-spies": "^1.0.0",
+    "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-spies": "^1.0.0",
+    "mocha": "^6.2.0",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.2",
     "vue": "^2.6.10",
