@@ -42,5 +42,19 @@ stage 1 단계에 대해서는 아래 작업을 수행하는 것이 도움이 �
 - [이 절차](https://github.com/tc39/proposals#onboarding-existing-proposals)에 따라 Proposal repo를 tc39 기관 내로 이동하기
 
 #### Stage 2
+진입하기 위한 조건
+- Initial spec text
+
+Stage 2의 의미
+실제로 개발되길 바라며 궁극적으로 표준에 포함되길 위원회가 바란다는 뜻.
+
+Stage 2에서 해야 할 일
+- Develop a full draft of the solution : 모든 질문에 대한 답이 될 필요는 없지만 드래프트 문서로부터 자신감이 느껴질 정도로 일관되게 작성되어야 함
+- Write initial spec text : 100% 완벽할 필요는 없지만 솔루션 전체를 커버해야 한다.
+- Prepare presentation : proposal에 대해 설명하고 왜 표준에 포함되어야 하는지 위원회를 설득해야 한다.
+
+아래와 같은 일을 하는 것도 추천
+- Keep talking with JavaScript developer
+- 
 
 ## [TC39 Code of conduct](https://tc39.es/code-of-conduct/)
