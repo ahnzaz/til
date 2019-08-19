@@ -666,6 +666,37 @@ type T11 = TypeName<string[] | number[]>; // "object"
 ```
 아.. 이거 뭔 말인지 영어 해석이 안되네..
 
+### [Type inference in conditional types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-inference-in-conditional-types)
+```infer``` keyword를 통해 타입을 추론할 수 있다.
+```typescript
+type ReturnType<T> = T extends (...args:any[])=> infer R ? R : any
+```
+
+conditional type 추론은 중첩될 수 있다.
+
+```typescript
+type Uncheked<T> = 
+T extends (infer U)[] ? U:
+T extends (...args:any[])=> infer U ? U :
+T extends Promise<infer U> ? U :
+T;
+
+type T0 = Unpacked<string>; // string
+type T1 = Unpacked<string[]>; // string
+type T2 = Unpacked<() => string>; // string
+type T3 = Unpacked<Promise<string>>; //string
+type T4 = Unpacked<Promise<string>[]>; // Promise<string>
+type T5 = Unpacked<Unpacked<Promise<string>[]>>; // string
+```
+오버로드 선언 된 함수의 타입 추론은 가장 마지막에 선언된 함수에 한해 처리된다.
+
+### [Predefined conditional type](https://www.typescriptlang.org/docs/handbook/advanced-types.html#predefined-conditional-types)
+- ```Exclude<T, U>``` : exclude from T those types that are assignable to U
+- ```Extract<T, U>``` : Extract from T those types that are assignable to U.
+- ```NonNullable<T>``` : Exclude null and undefined from T,
+- ```ReturnType<T>``` : Obtain return of function type.
+- ```InstanceType<T>``` : Obtain instance type of a constructor function type;
+
 ### TODO
 - Required class
 - Omit class
