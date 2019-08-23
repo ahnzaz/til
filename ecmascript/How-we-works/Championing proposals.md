@@ -55,6 +55,52 @@ Stage 2에서 해야 할 일
 
 아래와 같은 일을 하는 것도 추천
 - Keep talking with JavaScript developer
-- 
+- If looking into multiple paths, works towards drawing them to a close some time before stage 3
+- Stage 2에서는 테스트 할 수 있는 좋은 구현체가 필요하다. stage process에 있어 필수는 아니지만 stage 3으로 가기 전 실사용에 있어 피드백을 받는데 매우 유용하다.
+- 이상적으로는 가장 큰 해결점이 도출되고, TC39 회의에서 더욱 더 세밀한 부분에 대해서 논의된다.
+- TC39 회의에서 stage 2로 승격될 때 전통적으로 stage 3 리뷰어들이 선택된다.
+
+#### Stage 3
+진입 조건
+> - complete spec text
+> - Designated reviewers have signed off on the current spec text
+> - All ECMAScript editors have signed off on the current spec text
+
+진입 의의
+> The solution is complete and no further works is possible without implementation experience, significant usage and external feedback.
+
+Stage 3로 가기 위해서는,
+- 가능하다면, 스펙에 대한 모든 문법 문맥적인 의문점 해결할 것
+- Specification 문서를 완성할 것
+- Stage 3 리뷰 받을 것
+- 프레젠테이션 준비할 것
+
+Stage 3에서는
+- Write test262 test
+- Work on various implementations.
+- Communicate the decisions made to the broader community
+
+#### Stage 4
+진입 조건
+> - Test262 테스터들이 중심이 되는 사용 시나리오에 대해 테스트 함
+> - 두가지 호환되는 구현체가 수락 테스트를 통과해야 함
+> - 두개의 독립적인 VM에 탑재되어 인필드 테스트를 통과해야 함
+> - 모든 PR이 integrated 스펙 테스트와 함께 tc39/ecma262로 전송되어야 함
+> - 모든 ECMAScript 에디터들이 PR에 사인해야 함
+
+진입 의의
+> - 이 스펙이 바로 다음 표준에 추가될 것임
+
+Stage 4에 오르기 위해선
+- At least two specification-compliant implementations.
+- Full test262 tests.
+- A PR against the main specification
+- Prepare a presentation
+
+Stage 4에 오르고 난 후
+- Archive the proposal repository.
+- Ensure that good documentation is available.
+- Ensure polyfills/shims conditionally make use of native implementations when possible.
+
 
 ## [TC39 Code of conduct](https://tc39.es/code-of-conduct/)
