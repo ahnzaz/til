@@ -1,5 +1,26 @@
 # What's new in Chrome 76
 ## Features
+- Progressive web app 설치 버튼을 omnibox로 이동함
+- Mobile에서 mini-infobar라 불리는 아래의 작은 다이얼로그를 추가함
+  - ```beforeinstallprompt``` event에서 ```e.preventDefault()```를 호출하면 mini-infobar를 표시하지 않음
+- PWA가 android에 설치될 경우 WebAPK를 요청하여 설치한다. 그 후 안드로이드가 자동으로 manifest를 체크해서 업데이트를 설치한다. 매일마다 수행
+- Dark mode/Dark theme이 대부분 지원된다.
+```css
+@media (prefers-color-scheme:dark){
+    body{
+        color:white;
+        background-color:black;
+    }
+}
+```
+- ```Promise.allSettled()``` Promise.all()과 유사하지만 모든 Promise가 settled 상태가 되기 전까지 대기한다.
+- ```blob```을 위한 세 메소드 추가
+```typescript
+const test = await blob.text();
+const aBuiff = await blob.arrayBuffer();
+const stream = await blob.stream();
+```
+- Asynchronous clipboard API도 추가됨.
 
 ## [Dev tools](https://www.youtube.com/watch?v=GLUB2yzk0ZQ&list=PLNYkxOF6rcIBDSojZWBv4QJNoT4GNYzQD)
 ### Autocomplete with CSS values
