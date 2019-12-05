@@ -1,9 +1,19 @@
 # Worklog
 
+## 20191206
+### TODO
+#### QoE
+- [x] `paused` 처리
+- [ ] time overlap 수정 방안 고민
+- [ ] `throttle` 처리 추가
+#### PT
+#### 기타 업무
+
+
 ## 20191205
 ### TODO
 #### QoE
-- Code review 자료 만들기
+- [x] Code review 자료 만들기
   - QoE 특이 spec 설명
   - QoE module 전체 구조
   - 특이 사항에 대응하기 위한 구현체
