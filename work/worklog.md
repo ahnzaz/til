@@ -1,17 +1,32 @@
 # Worklog
 
+## 20191205
+### TODO
+#### QoE
+- Code review 자료 만들기
+  - QoE 특이 spec 설명
+  - QoE module 전체 구조
+  - 특이 사항에 대응하기 위한 구현체
+  - 스펙 확장 시 수정 포인트
+  - 남은 과제
+#### PT
+#### 기타 업무
+
 ## 20191204
 ### TODO
 #### QoE
-- [ ] Smash test 보강
+- [x] Smash test 보강
 #### PT
 - [ ] PT smash test 작성
 #### 통계 전반
+- [x] 리뷰 중에 개선 빠진 것 확인
 - [ ] Multiple player test page 작성
 #### Study
 - [ ] GraphViz 사용법 익히기
 #### 기타 업무
-- [ ] 동료 리뷰 및 C-Review
+- [x] 동료 리뷰 및 C-Review
+#### Review
+QoE smash test를 재작성 하면서 단위 오류 등의 사소한 오류를 더 발견할 수 있었다. 확실히 e2e 테스트가 도움이 되는것은 맞는데 빠른 속도로 테스트 시나리오를 짜는데 익숙하기가 어렵게 느껴진다. 조금 더 연습을 해야 하나?
 
 ## 20191203
 ### TODO
