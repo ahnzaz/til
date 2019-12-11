@@ -1,11 +1,37 @@
 # Worklog
 
+## 20191210
+### TODO
+#### 미리보기 플레이어
+- [ ] dns-prefetch 알아보기 및 적용
+- [ ] 리소스 2개 이상 확보해서 dns-prefetch 적용 확인
+- [ ] bulk data에 gif, image preset 추가 (리소스 확인)
+
+#### QoE
+- [ ] `throttle` 처리 추가 : `sampleTime` 넣어서 해결해야 함
+- [ ] `paused` 발생 시 timer tick 처리
+
+#### Study
+- [ ] [Microtask in detph 읽어보기](https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide/In_depth)
+
+## 20191210
+### TODO
+#### 미리보기 플레이어
+- [ ] dns-prefetch 알아보기 및 적용
+- [x]] 샘플 페이지 forking
+- [x] bulk data mockup
+
+#### QoE
+- [ ] `throttle` 처리 추가 : `sampleTime` 넣어서 해결해야 함
+- [ ] `paused` 처리
+
+
 ## 20191206
 ### TODO
 #### QoE
-- [x] `paused` 처리
-- [ ] time overlap 수정 방안 고민
-- [ ] `throttle` 처리 추가
+- [ ] `paused` 처리
+- [x]] time overlap 수정 방안 고민 : `subscribeOn`과 `asyncScheduler`를 통해 해결
+- [ ] `throttle` 처리 추가 : `sampleTime` 넣어서 해결해야 함
 #### PT
 #### 기타 업무
 
