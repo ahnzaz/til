@@ -1,11 +1,25 @@
 # Worklog
 
-## 20191210
+## 20191212
+### TODO
+#### 미리보기 플레이어
+- [ ] Viewport 표시기 observable util 만들기. (Polyfill 사용)
+- [ ] dns-prefetch 알아보기 및 적용
+- [ ] 리소스 2개 이상 확보해서 dns-prefetch 적용 확인
+
+#### QoE
+- [ ] `throttle` 처리 추가 : `sampleTime` 넣어서 해결해야 함
+- [ ] `paused` 발생 시 timer tick 처리
+
+#### Study
+- [ ] [Microtask in detph 읽어보기](https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide/In_depth)
+
+## 20191211
 ### TODO
 #### 미리보기 플레이어
 - [ ] dns-prefetch 알아보기 및 적용
 - [ ] 리소스 2개 이상 확보해서 dns-prefetch 적용 확인
-- [ ] bulk data에 gif, image preset 추가 (리소스 확인)
+- [x] bulk data에 gif, image preset 추가 (리소스 확인)
 
 #### QoE
 - [ ] `throttle` 처리 추가 : `sampleTime` 넣어서 해결해야 함
