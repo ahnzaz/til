@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+    <div>
+
+
+    </div>
+    <script type='text/javascript'>
+        (async function (){
+
+        const div = document.querySelector('div');
+        const MAX = 1000;
+
+        performance.mark('render-start');
+        for (let i = 0; i < MAX; i++) {
+            const video = document.createElement('video');
+            video.src = 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4';
+            div.appendChild(video);
+        }
+
+        await Promise.all(Array.from(document.querySelectorAll('video')).map((video) => new Promise((res) => {
+            video.addEventListener('canplay', res);
+        })));
+
+        performance.mark('dom-complete');
+
+        div.innerHTML = '';
+        
+        performance.mark('render-again');
+        for (let i = 0; i < MAX; i++) {
+            div.insertAdjacentHTML('beforeend', '<video src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"></video>')
+        }
+
+        await Promise.all(Array.from(document.querySelectorAll('video')).map((video) => new Promise((res) => {
+            video.addEventListener('canplay', res);
+        })));
+
+        performance.mark('html-complete');
+
+        performance.measure('dom', 'render-start', 'dom-complete');
+        performance.measure('html', 'render-again', 'html-complete');
+
+        performance.getEntriesByType('measure').forEach(entry=>console.log(`${entry.name} : ${entry.duration}`));
+        })();
+
+    </script>
+</body>
+
+</html>

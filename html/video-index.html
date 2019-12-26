@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+    <a href="https://b01-kr-naver-vod.pstatic.net/navertv/c/read/v2/VOD_ALPHA/navertv_2019_10_21_373/hls/e9439922-f352-11e9-a4d6-246e963a41ed-000010.ts?_lsu_sa_=64250fffb1d56486a4d405d76d954bb43ecb3618e602afc03397c5ca873134f5fc29fa556065900900323cb216389b8a513abdf882e2552f50009dba3836bb4c67759587b7d20cfb79bda600dc641f22d8d2743160feb4843e658059e1eabbc3c0fcd51f2ce5c1d695d2d4739fa5356fb8d96dcd7c17457f4d8505e3bfa35cfc6ed183e950ae57a1f265e109154acc89">asdf</a>
+    <script src="https://unpkg.com/@reactivex/rxjs@6.0.0/dist/global/rxjs.umd.js"></script>
+    <script type='text/javascript'>
+        
+        const ReadyState = [
+            '0:HAVE_NOTING',
+            '1:HAVE_METADATA',
+            '2:HAVE_CURRENT_DATA',
+            '3:HAVE_FUTURE_DATA',
+            '4:HAVE_ENOUGHT_DATA',
+        ];
+
+        const NetworkState = [
+            '0:NETWORK_EMPTY',
+            '1:NETWORK_IDLE',
+            '2:NETWORK_LOADING',
+            '30:NETWORK_NO_SOURCE',
+        ]
+        const events = [
+            // 'abort',
+            'loadstart',
+            // 'suspend',
+            // 'progress',
+            // 'stalled',
+            // 'source_changed',
+            // 'waiting',
+            'ended',
+            // 'canplay',
+            // 'canplaythrough',
+            // 'timeupdate',
+            'seeking',
+            'seeked',
+            // 'loadedmetadata',
+            // 'loadeddata',
+            'play',
+            'playing',
+            // 'pause',
+            // 'resize',
+            // 'waiting',
+            // 'click',
+            // 'dblclick',
+            // 'rightclick',
+            // 'volumechange',
+        ]
+        const video = document.createElement('video');
+        document.querySelector('body').appendChild(video);
+
+        video.defaultMuted = true;
+        video.controls = false;
+        // video.preload = 'none';
+        video.volume = 0;
+        video.muted = true;
+        // video.autoplay = true;
+        // video.src = 'https://www.w3schools.com/html/mov_bbb.mp4#t=7';
+        // video.src = 'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4';
+        // video.poster = "https://post-phinf.pstatic.net/MjAxOTA2MTdfOTYg/MDAxNTYwNzUwNDg5NzY3._DyI-19RKFPplG7IngEEl4wJFLkiXVrJn42PqU9z_zkg.QWkjIZpgNnH_oChBvlVfqONLN7XAISJ7CT4JMGajfrcg.JPEG/48541-preview_low_2718-1_48541_sc_v2com.jpg?type=w1200"
+        // video.loop = true;
+        // video.autoplay = true;
+        // video.defaultPlaybackRate = -1;
+        // video.preload = 'auto';
+        // video.addEventListener('progress', event=>{
+        //     console.log(video.seekable.end(0));
+        //     console.log(video.buffered.end(0));
+        // })
+
+        // const audio = document.createElement('audio');
+        // document.querySelector('body').appendChild(audio);
+        // audio.src = "https://www.w3schools.com/html/horse.ogg";
+        // audio.playbackRate = -1;
+        // audio.play();
+
+        // video.addEventListener('timeupdate', event => {
+        //     console.log(event.currentTarget.currentTime);
+        // });
+
+        // video.play();
+
+        events.forEach(function (event) {
+            video.addEventListener(event, function (event) {
+                console.log({
+                    eventType: event.type,
+                    // readyState: ReadyState[video.readyState],
+                    // networkState: NetworkState[video.networkState],
+                    // paused: video.paused,
+                    // src: video.src,
+                    // currentSrc: video.currentSrc,
+                    currentTime: event.target.currentTime,
+                    // returnValue: event.returnValue,
+                    // data: event.data,
+                    seeking: event.target.seeking,
+                });
+            });
+        });
+
+        document.querySelector('video').textTracks.addEventListener('change', event=>{
+            const shownTrack = Array.from(event.target).find(track=>track.mode === 'showing');
+            console.log(shownTrack);
+        })
+    </script>
+</body>
+
+</html>
