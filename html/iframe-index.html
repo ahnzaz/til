@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>IFrame test</title>
+</head>
+
+<body>
+    <div id='container1' width='100%' height='100%'>
+        <video src='./frame/pika.gif'></video>
+        <iframe float='left' width='50%' height='100%' src="./frame/frame1.html"></iframe>
+        <!-- <iframe float='left' width='50%' height='100%' src="./frame/frame2.html"></iframe> -->
+        <div id='div1'></div>
+        <div id='div2'></div>
+        <div id='div3'></div>
+    </div>
+    <div id='container2'></div>
+    <script type='text/javascript'>
+        window.addEventListener('load', event => {
+            console.log(`main load: ${event.timeStamp}`);
+        });
+
+        window.addEventListener('DOMContentLoaded', event => {
+            console.log(`main DOMContentLoaded: ${event.timeStamp}`);
+        });
+
+        // setTimeout(() => {
+        //     const mainDiv = document.querySelector('div');
+        //     mainDiv.innerHTML += `<iframe float='left' width='50%' height='100%' src="./frame/frame2.html"></iframe>`;
+        // }, 18);
+
+            window.con1 = document.querySelector('div#container1');
+            window.con2 = document.querySelector('div#container2');
+        [1, 2, 3].forEach(val => window[`div${val}`] = document.querySelector(`div#div${val}`));
+    </script>
+</body>
+
+</html>

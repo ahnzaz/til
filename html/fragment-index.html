@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id='wrapper'>
+        <p>QWERQWER!</p>
+        <p>QWERQWER!</p>
+        <p>QWERQWER!</p>
+        <p>QWERQWER!</p>
+    </div>
+
+    <script type='text/javascript'>
+        setTimeout(() => {
+
+            const rootNode = document.createElement('div');
+
+            for (let i = 0; i < 4; i++) {
+                let p = document.createElement('p');
+
+                p.innerText = 'asdfasdf!';
+                rootNode.append(p);
+            }
+
+            const body = document.querySelector('body');
+
+            body.insertBefore(rootNode, document.querySelector('#wrapper'));
+
+            debugger;
+            const fragment = document.createDocumentFragment();
+
+            const frgDiv = document.createElement('div');
+            frgDiv.append(document.createElement('video'));
+            frgDiv.append(document.createElement('video'));
+            frgDiv.append(document.createElement('video'));
+
+            fragment.append(frgDiv);
+
+            body.append(fragment);
+        }, 2000);
+    </script>
+</body>
+
+</html>

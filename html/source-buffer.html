@@ -1,0 +1,35 @@
+<html>
+
+<body>
+    <div><video></video></div>
+</body>
+
+<script type='text/javascript'>
+    const video = document.querySelector('video');
+
+    const source = new MediaSource();
+
+    video.src = URL.createObjectURL(source);
+
+    source.addEventListener('sourceopen', () => {
+        const sourceBuffer = source.addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2');
+
+        fetch('http://nickdesaulniers.github.io/netfix/demo/frag_bunny.mp4')
+            .then(response => {
+                response.blob().then(buffer => {
+                    debugger;
+                    return buffer.arrayBuffer();
+                }).then(buffer => {
+                    debugger;
+                    sourceBuffer.addEventListener('updateend', () => {
+                        source.endOfStream();
+                        video.muted = true;
+                        video.play();
+                    });
+                    sourceBuffer.appendBuffer(buffer);
+                });
+            });
+    });
+</script>
+
+</html>
