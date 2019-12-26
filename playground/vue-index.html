@@ -7,15 +7,24 @@
     <script type='text/javascript' src='./dist/bundle.js' defer></script>
 </head>
 
+
+private _onPressShareButton() {
+    return (
+        <core:share-dialog btn = "share-button#target"></core:share-dialog>
+    );
+}
 <body>
     <div id='container'>
-        <core-player>
-            <core-controller>
-                <core-play-button>
-
-                </core-play-button>
-            </core-controller>
-        </core-player>
+        <web-player spec="full">
+            <div id='header'>   <!--custom layout
+                <likeit value=30/>
+            </div>
+            <web:header likeit=30>  //default layout
+            </web:header> -->
+            <web-controller>
+                <core:button onPress={this._onPressShareButton} source={share_button.png}/>
+            </web-controller>
+        </web-player>
     </div>
     <script type='text/javascript' defer>
         window.onload = () => {
@@ -26,3 +35,67 @@
 </body>
 
 </html>
+
+
+_onRenderTitleCompoent() {
+    return
+    (
+        //custom
+        <div header= >
+
+        </div>
+        //  
+        <header>
+
+        </header>
+        <web:SubtitleConfigureDialog>
+
+        </web:SubtitleConfigureDialog>
+
+        <web:FlatMapList id='Substitle Menu' ListItemRender = {ListItem[]}>
+            <header title="자막" option=["추가", "옵션"]></header>
+        </web:FlatMapList>
+    )
+}
+
+<Header title="자막설정"></Header>
+{this.props.listItems.forEach(() => {return <div></div>})}
+<toggle title="자막 사용"></toggle>
+
+
+<web-player spec="full"
+    titleAreaCompoent = {this._onRenderTitleCompoent}
+    centerAreaComponent = {}
+>
+
+</web-player>
+
+
+_onRenderItem(IItem) {
+    if(IItem.key === '해상도') {
+        return (
+            <View>
+                <TextButton></TextButton>
+            </View>
+        )
+    }
+
+    
+    if(IItem.key === '자막') {
+        return (
+            <View>
+                <TextButton></TextButton>
+            </View>
+        )
+    }
+}
+<flastlist
+    items={IItem[]}
+    headerComponent={<header></header>}
+    renderItem={_onRenderItem}
+    footerComponent={<footer></footer>}
+    contentStyle={{width: 640, height: 320}}
+/>
+</flastlist>
+
+</selector>
