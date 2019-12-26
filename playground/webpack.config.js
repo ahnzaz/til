@@ -1,6 +1,6 @@
 const path = require("path");
 
-const DIR_BUNDLED = "dist";
+const DIR_BUNDLED = "bundled";
 const FILE_BUNDLED = "bundle.js";
 
 module.exports = {
@@ -9,7 +9,8 @@ module.exports = {
 
     entry: {
         // "index.ts": "./src/play-index.ts",
-        "vue-index.ts": "./src/vue-index.ts",
+        // "vue-index.ts": "./src/vue-index.ts",
+        "mocha-test.ts": "./src/mocha-test.ts",
     },
 
     resolve: {
