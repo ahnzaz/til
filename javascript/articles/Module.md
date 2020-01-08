@@ -1,5 +1,5 @@
 # javascript Module system
-## Background
+# Background
 js 언어가 Browser 환경에서 벗어나 다양한 플랫폼으로 확장하기 시작하면서 기존 언어에 비해 부족한 점을 개선할 필요가 있었다.
 
 C/Java등의 메이저 언어들은 모두 코드의 모듈화를 지원하고 있는데 js는 언어 자체적으로 이를 지원하고 있지는 않은 상태였다.
@@ -9,8 +9,8 @@ browser 환경 내에서 동작한다는 가정 하에 설계되었기 때문일
 
 언어적 차원에서 module 지원의 필요성이 대두되었고 2009년 Mozilla의 엔지니어인 Kevin Dangoor가 최초 `ServerJS`라 불리던 `commonJS`의 원형이 되는 모듈 시스템 스펙을 발표하면서 본격적인 module 스펙이 논의되기 시작한다.
 
-## CommonJS
-### History
+# CommonJS
+## History
 - 2009-01-29 [Kevin dangoor가 그의 블로그에서 처음 js가 server-side에서 동작하기 위해 갖추어야 할 것들을 제시하였다.](https://www.blueskyonmars.com/2009/01/29/what-server-side-javascript-needs/)
 - 2009-01 ServerJS라는 이름의 그룹을 결성하였다.
 - 2009-03 CommonJS API 0.1을 제정
@@ -19,9 +19,9 @@ browser 환경 내에서 동작한다는 가정 하에 설계되었기 때문일
 
 [출처](http://www.commonjs.org/history/)
 
-### Spec
+## Spec
 - Module/1.1 specification - http://wiki.commonjs.org/wiki/Modules/1.1
-#### Module context
+### Module context
 Module 내부에 `require`라는 function 형태의 자유 변수가 존재한다.
 1. `require`는 모듈 식별자를 인자로 받아들인다.
 2. `require`의 반환값은 외부 모듈이 export한 인터페이스이다.
@@ -39,19 +39,19 @@ Module 내부에 `module` object가 존재한다.
 2. `uri` module이 생성된 시점에서 완전히 구성된 URI 값을 가지고 있다.
 
 
-#### Module identifier
+### Module identifier
 1. 모듈 식별자는 slash('/')로 구분된 'term'으로 구성된 문자열이다.
 2. 'term'은 camelCase, ".", ".."이다.
 3. `.js` 등의 파일 확장자를 가져선 안된다.
 4. 상대/절대적일 수 있으며 상대적 식별자는 ".", ".."로 시작하여야 한다.
 5. 상대적 식별자는 `require`가 작성 및 호출된 곳의 식별자로부터 상대적이여야 합니다.
 
-#### Unspecified
+### Unspecified
 아래 부분은 스펙에서 정의하지 않고 있습니다.
 1. 모듈을 db, file system, factory function, link library 등 어느곳에 저장할지
 2. 모듈 식별자 분석을 위해 module loader에서 `PATH`를 지원할지
 
-#### Sample
+### Sample
 ```javascript
 // math.js
 exports.add = function(){
@@ -76,34 +76,142 @@ inc(a); // 2
 
 module.id = "program"
 ```
-### Implementation
+## Implementation
 - [RequireJS](https://requirejs.org/)
-### Application
-### Reference
+## Application
+## Reference
 - Official websites : http://www.commonjs.org/
 - Official wiki pages : http://wiki.commonjs.org/wiki/CommonJS
 - Official repository : https://github.com/commonjs/commonjs
 
-## AMD
-### History
-### Spec
-### Implementation
-### Application
+# AMD
+## History
+CommonJS는 Server-side에서는 훌륭한 module loading spec이었지만 client-side의 async module 요구사항을 완벽하게 반영할 수 없었다. 이에 반박한 그룹의 일부가 떨어져 나가 별도로 제정된 스펙이 AMD이다. AMD는 client/server에 관계없이 모듈을 async 하게 호출 할 수 있는 스펙에 기반하였으며 양쪽 모두에서 동작하는 것을 목표료 하였다.
+## Spec
+### `define` function
+`define`이라는 이름의 전역 자유 변수를 정의하며 function signature는 아래와 같다.
+`define(id?, dependencies?, factory)`
 
-## UMD
-### History
-### Spec
-### Implementation
-### Application
+#### id
+정의하고자 하는 module의 id를 지정한다. optional하며 사용한다면 전역 레벨에서 절대적인 값을 가져야 한다.
 
-## ES6 module
-### History
-### Spec
-### Implementation
-### Application
+#### dependencies
+현재 모듈을 정의하기 위해서 의존성을 갖는 모듈을 열거합니다. 의존성 모듈은 factory로 전달되어 현재 모듈을 정의하는데 사용합니다.
+의존성 모듈의 id는 상대적일 수 있습니다. 현재 모듈에 대해서 상대 참조로 의존성을 열거할 때 사용합니다.
+의존성 모듈 목록에 `require`, `exports`, `module`이 정의되어 있다면 이는 CommonJS spec에 따른 해당 변수들을 가져오게 됩니다.
+dependencies 값은 optional하며 생략될 경우 `["require", "exports", "module"]`을 기본값으로 사용합니다. factory funtion의 인자수가 3보다 적을 경우 loader가 인자수에 맞게 값을 선택하여 전달할 수 있습니다.
 
-## System
-### History
-### Spec
-### Implementation
-### Application
+#### factory
+모듈을 정의할 때 수행하는 factory입니다. function이라면 반드시 한번 호출되어야 하며, 객체라면 exported value로 할당해야 합니다.
+factory function이 값을 반환한다면 module의 exporting value로 할당해야 합니다.
+
+dependencies argument가 선언되어 있다면 module loader는 factory function의 의존성을 검사해서는 안된다.
+
+### defind.amd property
+구현체가 여러가지 정보를 표시할 수 있게 하는 global property
+
+## Example
+### Using require and exports
+Sets up the module with ID of "alpha", that uses 
+```javascript
+define("alpha", ["require", "exports", "beta"], function(require, exports, beta){
+    exports.verb = function (){
+        return beta.verb();
+        // or
+        return require("beta").verb();
+    }
+})
+```
+
+## Implementation
+### require
+https://github.com/amdjs/amdjs-api/blob/master/require.md
+
+
+## Application
+## Reference
+- [Offical repository](https://github.com/amdjs/amdjs-api)
+
+# ES6 module
+## History
+TC39 자체적으로도 모듈을 표준화하려는 작업이 있었고 그 결과물이 ES6의 module로 제정되었다.
+
+## Spec
+### [export](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/export)
+- named export : 
+  - 식별자를 export할 수 있다.
+  - 한 모듈에서 여러 개 export 가능
+  - 여러 값을 export할 때 유용함.
+  - 가져갈 때에는 동일한 이름으로 가져가야 함
+
+- default export
+  - 식별자가 없이도 export 할 수 있다.
+  - 한 모듈에서 하나만 export 가능
+  - 가져올 때 아무 이름으로 변경 가능
+
+```javascript
+// Export identifiers
+export let name1, name2, ..., nameN;
+export let name1 = ..., name2 = ... ;
+export function functionName(){};
+export class ClassName{};
+
+// Export as alias
+export { name1, name2, ..., nameN};
+export { variable1 as name1, variable2 as name2, ..., nameN};
+
+// Destructing하여 export
+export const {name1, name2:bar} = o;
+
+// Default export
+export default expression;
+export default function (){}; // Also class, function*
+export default function name1(){} // Also class, function*
+export { name1 as default, ... };
+
+// Combine module
+export * from ...;
+export * as name1 from ...;
+export {name1, name2, ...} from ...;
+export { import as name1, import2 as name2, ...} from ...;
+export {default} from ...;
+
+```
+
+### [import](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/import)
+다른 모듈에서 내보낸 바인딩을 가져올 때 사용함
+- html 안에서 작성한 script는 `import`를 사용 불가능
+- `<script>` 태그의 `nomodule` 속성을 사용해 하위 호환 가능
+  - module을 지원하는 브라우저는 해당 태그를 사용하지 않음
+  - module을 지원하지 못하는 브라우저는 해당 태그를 통해 구형으로 정의된 script 로드 가능
+
+```javascript
+import defaultExport from "module-name";
+import * as name from "module-name";
+import { export1 } from "module-name";
+import { export1 as alias1 } from "module-name";
+import { export1, export2 } from "module-name";
+import { foo, bar } from "module-name/path/to/specific/un-exported/file";
+import defaultExport, {export1 [, [ ... ] ]} from "module-name";
+import defaultExport, * as name from "module-name";
+import "module-name";
+var promise = import("module-name");
+```
+
+## Implementation
+- ES6 스펙을 구현하고 있는 브라우저
+- NodeJS에서도 실험적 기능으로(`.mjs` 확장자) 지원 중
+## Application
+
+
+# System
+## History
+## Spec
+## Implementation
+## Application
+
+# UMD
+## History
+## Spec
+## Implementation
+## Application
