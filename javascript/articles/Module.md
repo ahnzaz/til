@@ -202,16 +202,35 @@ var promise = import("module-name");
 - ES6 스펙을 구현하고 있는 브라우저
 - NodeJS에서도 실험적 기능으로(`.mjs` 확장자) 지원 중
 ## Application
+## 비직관적 동작들
+- module의 local scope는 module 최초 load시 한번만 수행되며 다른 곳에서 import에는 이미 export된 값들이 재활용된다.
 
 
 # System
 ## History
+Canopy tax라는 곳에서 지원하고 있는 dynamic module loader system.
+AMD/CommonJS, ES6 module 그 어느것과도 다른 독자적인 module spec.
+정확히 어떤 히스토리를 가지고 있는지 잘 모르겠음. 언급도 많이 되질 않는 걸 봐선 범용적으로 쓰이는 시스템은 아닌 듯
 ## Spec
 ## Implementation
 ## Application
+## Reference
+- [Official github repo](https://github.com/systemjs/systemjs)
 
 # UMD
+
 ## History
+js module spec이 여러개 난립하자 이를 통합하여 처리할 수 있는 design patten의 필요성이 대두되었고 이를 해결하기 위해 Universal module definition이 등장하였다.
+Client/Server side 무관하게 모든 module loader 시스템에 대응하는 것을 목표로 개발하였다.
+
 ## Spec
+- CommonJS의 `require`/`import`, AMD의 `define` object를 runtime에 체크하여 module loader 환경을 파악한 뒤 해당 환경에 맞는 module definition을 수행하는 design pattern이다.
+
 ## Implementation
+- Webpack은?
+- Typescript의 compilerOption 중 `module`을 `umd` 값으로 세팅하면 UMD pattern이 적용 된 module로 컴파일 한다.
+
 ## Application
+
+### Reference
+- [Official github repo](https://github.com/umdjs/umd)
