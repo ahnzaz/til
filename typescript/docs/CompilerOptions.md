@@ -205,9 +205,154 @@ Diagnostic을 더 자세히 표현
 
 - [ ] 어떤 내용이 담겨있는지 확인 필요
 
+## importHelper
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--importHelpers|boolean|false|Import emit helpers (e.g. __extends, __rest, etc..) from tslib|
+
+`__extends`, `__rest` 같은 `tslib` library의 헬퍼 함수를 import한다.
+
+- [ ] `tslib`에 어떤 helper function이 들어있는지 확인하고 역할도 작성할 것
+
+## incremental
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--incremental|boolean|`true` if `composite` is on, `false` otherwise.|Enable incremental compiliation by reading/writing information from prior compilations to a file on dist. This file is controlled by the `--tsBuildInfoFile` flag.|
+
+이전 컴파일에 대한 정보를 기록한 파일을 기반으로 차분 컴파일을 지원한다.
+
+- [ ] compile info file에 어떤 내용이 들어가는지 확인
+- [ ] 실제로 incremental compile을 해보면서 동작 확인
+
+## inlineSourceMap
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--inlineSourceMap|boolean|false|Emit a single file with source maps instead of having a searate file|
+
+- sourceMap을 별도로 분리하지 않고 컴파일 된 파일에 포함한다.
+
+## init
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--init|||Initializes a TypeScript project and creates a `tsconfig.json` file|
+
+Typescript project를 초기화 하고 `tsconfig.json` 파일을 생성
+
+- [ ] 혹시 더 자세하게 설명된 자료 있으면 공부할 것
+
+## isolateModules
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--isolateModules|boolean|false|Perform additional checks to ensure that separate compilation(such as with `transpileModule` or @babel/plugin-transform-typescript) would be safe.|
+
+분리형 컴파일이 안전할 지 추가로 체크한다.
+
+- [ ] 어떤 내용인지 잘 모르겠음. 추가적인 내용 및 동작 확인 필요
+
+## jsx
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--jsx|string|"preserve"|Support JSX in `.tsx` files:"react", "preserve", "react-native". See [JSX](https://www.typescriptlang.org/docs/handbook/jsx.html)|
+
+`.tsx` file 내의 jsx 문법을 지원한다.
+
+- [ ] 각 옵션들이 어떤 내용인지 확인 필요
+
+## jsxFactory
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--jsxFactory|string|"React.createElement"|Specify the JSX factory function to use when targeting react JSX emit, e.g. `React.createElement` or `h`.|
+
+react jsx를 emit할 때 JSX factory를 지정한다.
+
+- [ ] h가 뭔지 확인 필요
+
+## keyofStringsOnly
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--keyofStringsOnly|boolean|false|Resolve `keyof` to string valued property names only (no numbers or symbols)|
+
+`keyof` 연산자를 문자열을 키로 가지는 값으로만 한정한다. (숫자형, 심볼 제외)
+
+- [ ] 이해는 하겠는데 정확히 어떻게 동작할 지 모르겠음(결과값이). 확인 필요
+
+## useDefineForClassFields
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--useDefineForClassFields|boolean|false|Emit class fields with ECMAScript standard semantics|
+
+- Class field를 ECMAScript 표준 방식으로 emit한다.
+
+- [ ] true/false 차이 확인 필요
+
+## lib
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--lib|string[]|default|List of library files to be included in the compilation.|
+
+포함할 library를 선택한다.
+
+- [ ] 모두 알아볼 필요는 없고, 직관적으로 내용을 알 수 없는 library만 확인 필요
+- [ ] ScriptHost
+
+## listEmittedFiles
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--listEmittedFiles|boolean|false|Print names of generated files part of the compilation|
+
+emit한 파일들 목록을 출력한다. 그래 이런 옵션이 필요했어.
+
+- [ ] true로 설정 시 출력하는 내용 확인
+
+## listFiles
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--listFiles|boolean|false|Print names of files part of the compilation|
+
+Emit 대상 파일들을 컴파일 과정 도중 출력한다.
+
+- [ ] 위와 어떤 차이가 있는지 확인 필요
+
+## locale
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--locale|string|(platform specific)|The locale to use to show error messages, e.g. en-us.|
+
+에러 메시지를 표기할 언어를 선택한다. 한국어도 가능하네.
+
+- [ ] 한국어로 설정해서 확인 필요
+
+## mapRoot
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--mapRoot|string||Specifies the location where debugger should locate map files instead of generated locations. User this flag if the .map files will be located at run-time in a different location than the .js files. The location specified will be embedded in the sourceMap to direct the debugger where the map files will be located. This flag will now create the specified  path and generate the map files in that location. instead, creatre a post build step that moves the files to the specified path.|
+
+디버거가 소스맵을 참조할 경로를 따로 지정해야 할 경우 사용
+
+## maxNodeModuleJsDepth
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--maxNodeModuleJsDepth|number|0|The maximum dependency depth to search under node_modules and load JavaScript files. only applicapable with `--allowJs`.|
+
+node_modules 하위 javascript file을 몇 번째 깊이까지 탐색할 지 지정
+
+## moduleResolution
+|Option|Type|Default|Description|
+|--|--|--|--|
+|--moduleResolution|string|module === "AMD" or "System" or "ES6" ? "Classic" : "Node"|Determine how modules get resolve. Either "Node" for Node.js/io.js style resolution, or "Classic". See [Module Resolution documentation](https://www.typescriptlang.org/docs/handbook/module-resolution.html) for more detail.|
+
+모듈 resolve 방식을 결정한다. "Node"로 지정하면 `node_modules` directory를 탐색한다.
+
+## newLine
+
+
+
+
+
 |Option|Type|Default|Description|
 |--|--|--|--|
 |--|type|default|desc|
+
 
 
 
