@@ -28,7 +28,7 @@ module.exports = function () {
         externals: {
             "react": "React",
             "react-dom": "ReactDOM",
-            "@material-ui/core" : "MaterialUI",
+            "@material-ui/core": "MaterialUI",
         },
 
         output: {
@@ -37,6 +37,9 @@ module.exports = function () {
         },
 
         devServer: {
+            inline: true,
+            hot: true,
+            hotOnly: true,
             contentBase: path.join(__dirname, './dist'),
             compress: true,
             port: 8080,
