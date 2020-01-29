@@ -26,6 +26,6 @@ export default class VideoDisplay extends React.Component<Partial<VideoDisplayPr
     }
 
     render() {
-        return <video controls src={this.props.source}></video>
+        return <video controls={this.props.controls} src={this.props.source}></video>
     }
 }

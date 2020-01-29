@@ -2,28 +2,33 @@ import React from 'react';
 import SourceInput from './SourceInput';
 import VideoDisplay from './VideoDisplay';
 
-const defaultState = {
+const defaultProps = {
     source: "https://www.w3schools.com/html/mov_bbb.mp4",
+    controls: false,
 }
 
 type VideoElementProperties = {
-    source: string,
+    source?: string,
+    controls?: boolean,
 }
 
-export default class VideoElement extends React.Component {
+export default class VideoElement extends React.Component<VideoElementProperties> {
     public state: VideoElementProperties;
 
     constructor(props: VideoElementProperties) {
-        super(props);
+        super({
+            ...props,
+            ...defaultProps
+        });
         this.state = {
-            ...defaultState,
+            ...defaultProps,
             ...props,
         };
     }
 
     render() {
         return <div>
-            <VideoDisplay source={this.state.source}></VideoDisplay>
+            <VideoDisplay source={this.state.source} controls={this.props.controls}></VideoDisplay>
             <SourceInput onClick={(source: string): void => this.setSrc(source)}></SourceInput>
         </div>
     }
