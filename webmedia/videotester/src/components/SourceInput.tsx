@@ -3,6 +3,7 @@ import React from 'react';
 
 export type SourceInputProperties = {
     source: string;
+    onClick?: (source: string) => void;
 }
 
 const defaultState: SourceInputProperties = {
@@ -22,8 +23,19 @@ export default class SourceInput extends React.Component<Partial<SourceInputProp
 
     render() {
         return <div>
-            <TextField className="source-input" value={this.state.source} />
-            <Button variant="contained">Select</Button>
+            <TextField className="source-input" defaultValue={this.state.source} onChange={(event: any): void => this.setSource(event)} />
+            <Button variant="contained" onClick={() => this.onClick()}>Select</Button>
         </div>
+    }
+
+    public setSource(event: any): void {
+        this.setState({
+            ...this.state,
+            source: event.target.value,
+        })
+    }
+
+    public onClick(): void {
+        this.state.onClick?.(this.state.source);
     }
 }

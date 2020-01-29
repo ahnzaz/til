@@ -18,13 +18,19 @@ export default class VideoElement extends React.Component {
         this.state = {
             ...defaultState,
             ...props,
-        }
+        };
     }
 
     render() {
         return <div>
             <VideoDisplay source={this.state.source}></VideoDisplay>
-            <SourceInput></SourceInput>
+            <SourceInput onClick={(source: string): void => this.setSrc(source)}></SourceInput>
         </div>
+    }
+
+    public setSrc(source: string): void {
+        this.setState({
+            source,
+        })
     }
 }

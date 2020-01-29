@@ -22,17 +22,10 @@ export default class VideoDisplay extends React.Component<Partial<VideoDisplayPr
         this.state = {
             ...defaultProperties,
             ...props,
-        }
+        };
     }
 
     render() {
-        return <video controls src={this.state.source}></video>
-    }
-
-    public set source(source: string) {
-        this.state = {
-            ...this.state,
-            source,
-        }
+        return <video controls src={this.props.source}></video>
     }
 }
