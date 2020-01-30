@@ -2,6 +2,7 @@ const path = require("path");
 
 module.exports = function () {
     return {
+        target: "web",
         mode: "development",
         entry: {
             "index": "./src/index.tsx",
@@ -33,17 +34,15 @@ module.exports = function () {
 
         output: {
             filename: 'bundle.js',
-            path: path.resolve(__dirname, './dist/js'),
+            path: path.resolve(__dirname, './dist'),
         },
 
         devServer: {
+            publicPath: "/dist/",
+            contentBase: path.join(__dirname, './static'),
+            port: 8080,
             inline: true,
             hot: true,
-            hotOnly: true,
-            contentBase: path.join(__dirname, './dist'),
-            compress: true,
-            port: 8080,
-            open: true,
         }
     }
 }
