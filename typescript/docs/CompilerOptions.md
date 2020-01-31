@@ -20,7 +20,8 @@ Compiler option에 대해 알아낸 정보들.
 
 Default export가 없는 module에서 default import를 허용할지 여부.
 
-- [ ] 어떤 의미인지 sample code를 통해 알아봐야 함
+- [x] 어떤 의미인지 sample code를 통해 알아봐야 함
+  - default export가 없는 경우 export 한 identifier들을 member field로 가지는 object를 default export함.
 
 ## `allowUmdGlobalAccess`
 | Option                 | Type    | Default | Description                             |
@@ -30,6 +31,7 @@ Default export가 없는 module에서 default import를 허용할지 여부.
 Module 내부에서 UMD global에 억세스 허용할지 여부를 결정
 
 - [ ] compile code에 어떤 변화가 발생하는지 확인 필요
+  - 모르겠다.
 
 ## `allowUnreachableCode`
 | Option                 | Type    | Default | Description                              |
@@ -45,7 +47,7 @@ unreachable code를 컴파일 시 허용할지 결정
 | ------------------- | ------- | ------- | ------------------------------------- |
 | --allowUnusedLabels | boolean | false   | Do not report errors on unused labels |
 
-- [ ] label이 뭐지?
+- [x] label:for loop에 붙이는 이름
 
 ## `alwaysStrict`
 | Option         | Type    | Default | Description                                                     |
@@ -116,7 +118,22 @@ Typescript가 referenced project를 어디서 찾을 지 결정할 수 있게 �
 
 진단 결과 출력
 
-- [ ] 어떤 효과가 있는지 확인 필요. 아마 compile 시 console output 일듯?
+```
+Files:            9
+Lines:        24962
+Nodes:       112243
+Identifiers:  41107
+Symbols:      27982
+Types:         9294
+Memory used: 84694K
+I/O read:     0.00s
+I/O write:    0.01s
+Parse time:   0.30s
+Bind time:    0.11s
+Check time:   0.68s
+Emit time:    0.03s
+Total time:   1.12s
+```
 
 ## `disableSizeLimit`
 | Option             | Type    | Default | Description                                   |
@@ -125,7 +142,9 @@ Typescript가 referenced project를 어디서 찾을 지 결정할 수 있게 �
 
 Javascript project의 크기 제한 해제
 
-- [ ] JavaScript project에 크기 제한이 있었나 보네. 관련 내용 파악할 것
+- [x] JavaScript project에 크기 제한이 있었나 보네. 관련 내용 파악할 것
+  - tsfile이 아닌 js파일은 전체 20MB의 사이즈 제한이 있음. 그 제한을 해제할 때 사용하는 플래그
+  - https://github.com/microsoft/TypeScript/issues/7444#issuecomment-197064666
 
 ## `downlevelIteration`
 | Option               | Type    | Default | Description                                                                                          |
@@ -152,7 +171,9 @@ Spread/destructuring 시 `for...of` 구문이 ES5/ES3 환경으로 제대로 컴
 
 결과물 파일 처음에 BOM 삽입
 
-- [ ] BOM 값 뭔지 확인 필요
+- [x] BOM 값 뭔지 확인 필요
+  - `0xEF 0xBB 0xBF`
+  - `.ts` file의 구분자가 아니였음.
 
 
 ## `emitDeclarationOnly`
@@ -162,7 +183,9 @@ Spread/destructuring 시 `for...of` 구문이 ES5/ES3 환경으로 제대로 컴
 
 `.d.ts` file만 생성함
 
-- [ ] 결과물 확인 필요
+- [x] 결과물 확인 필요
+  - Signature만 선언되어 있는 `.d.ts` 파일만 생성됨
+  - `.d.ts` file이 있든 없든 생성됨.
 
 ## emitDecoratorMetadata
 | Option                  | Type    | Default | Description                                                                                                                                        |
