@@ -8,8 +8,10 @@ Compiler option에 대해 알아낸 정보들.
 
 .js file도 compile에 포함되게 한다.
 
-- [ ] 일반적인 code는 컴파일 할 거리가 없으므로 변화가 없을 것으로 예상
-- [ ] module 선언 등은 `module` option에 따라 달라질 듯
+- [x] 일반적인 code는 컴파일 할 거리가 없으므로 변화가 없을 것으로 예상
+  - Target에 따라서 compile 됨
+- [x] module 선언 등은 `module` option에 따라 달라질 듯
+  - ESModule은 `amd`, `commonjs`등으로 변환되나 이미 `commonjs`로 되어 있는건 변하지 않는 듯?
 
 ## `allowSyntheticDefaultImports`
 | Option                          | Type    | Default                                  | Description                                                                                                 |
