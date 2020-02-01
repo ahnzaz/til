@@ -4,14 +4,16 @@ export type VideoDisplayProperties = {
     source: string,
     controls: boolean,
     loop: boolean,
+    playing:boolean,
+}
+
+
+export type VideoDisplayState = VideoDisplayProperties & {
 }
 
 export const defaultProperties: Partial<VideoDisplayProperties> = {
     controls: true,
     loop: false,
-}
-
-export type VideoDisplayState = VideoDisplayProperties & {
 }
 
 export default class VideoDisplay extends React.Component<Partial<VideoDisplayProperties>> {
@@ -23,9 +25,26 @@ export default class VideoDisplay extends React.Component<Partial<VideoDisplayPr
             ...defaultProperties,
             ...props,
         };
+
+        this._videoElement = React.createRef();
     }
 
+
+    private _videoElement:React.RefObject<HTMLVideoElement>;
+
     render() {
-        return <video controls={this.props.controls} src={this.props.source}></video>
+        return <video ref={this._videoElement} controls={this.props.controls} src={this.props.source}></video>;
+    }
+
+    public componentDidUpdate():void{
+        this.togglePlay();
+    }
+    
+    private togglePlay():void{
+        if(this.props.playing){
+            this._videoElement.current?.play();
+        }else{
+            this._videoElement.current?.pause();
+        }
     }
 }
