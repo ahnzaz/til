@@ -3,6 +3,7 @@ import EventList from './EventList';
 import PauseButton from './PauseButton';
 import PlayButton from './PlayButton';
 import SourceInput from './SourceInput';
+import StatesGrid from './states/StatesGrid';
 import VideoDisplay from './VideoDisplay';
 
 type VideoElementProps = {
@@ -13,6 +14,7 @@ type VideoElementProps = {
 type VideoElementState = VideoElementProps & {
     playing: boolean;
     events: Event[];
+    video: HTMLVideoElement
 }
 
 const defaultState: Partial<VideoElementState> = {
@@ -42,7 +44,8 @@ export default class VideoElement extends React.Component<Partial<VideoElementPr
     private _eventListener(event: Event) {
         this.setState((state: Partial<VideoElementState>): Partial<VideoElementState> => {
             return {
-                events: [...state.events || [], event]
+                events: [...state.events || [], event],
+                video: ((event.target as HTMLVideoElement)?.tagName === "VIDEO" ? event.target : state.video) as HTMLVideoElement
             }
         })
     };
@@ -54,6 +57,9 @@ export default class VideoElement extends React.Component<Partial<VideoElementPr
             <div>
                 <PlayButton onClick={this.play}></PlayButton>
                 <PauseButton onClick={this.pause}></PauseButton>
+            </div>
+            <div>
+                <StatesGrid video={this.state.video}></StatesGrid>
             </div>
             <div>
                 <EventList events={this.state.events}></EventList>
