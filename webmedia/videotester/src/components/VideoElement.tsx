@@ -1,4 +1,6 @@
 import React from 'react';
+import snapshot, { defaultEventProps, defaultVideoElementProps } from '../utils/snapshot';
+import isInstanceOf from './../utils/isInstanceOf';
 import EventList from './EventList';
 import PauseButton from './PauseButton';
 import PlayButton from './PlayButton';
@@ -13,7 +15,7 @@ type VideoElementProps = {
 
 type VideoElementState = VideoElementProps & {
     playing: boolean;
-    events: Event[];
+    events: Partial<Event>[];
     video: HTMLVideoElement
 }
 
@@ -43,10 +45,18 @@ export default class VideoElement extends React.Component<Partial<VideoElementPr
 
     private _eventListener(event: Event) {
         this.setState((state: Partial<VideoElementState>): Partial<VideoElementState> => {
+            const clonnedVideo = event.target && isInstanceOf(event.target, HTMLVideoElement) && snapshot(event.target as HTMLVideoElement, defaultVideoElementProps) as EventTarget;
+
             return {
-                events: [...state.events || [], event],
-                video: ((event.target as HTMLVideoElement)?.tagName === "VIDEO" ? event.target : state.video) as HTMLVideoElement
-            }
+                events: [...state.events || [], {
+                    ...snapshot(event, defaultEventProps),
+                    ...clonnedVideo && {
+                        target: clonnedVideo,
+                        currentTarget: clonnedVideo,
+                    }
+                }],
+                video: (event.target as HTMLVideoElement)?.tagName === 'VIDEO' ? event.target as HTMLVideoElement : state.video,
+            };
         })
     };
 

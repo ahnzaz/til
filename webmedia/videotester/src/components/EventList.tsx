@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import React, { ReactElement } from "react";
 
 export type EventListProps = {
-    events: Event[]
+    events: Partial<Event>[]
 }
 
 export type EventListStates = EventListProps & {
@@ -24,10 +24,10 @@ export default class EventList extends React.Component<Partial<EventListProps>, 
                 <TableHead>
                     <TableRow>
                         <TableCell align="center">
-                            Type
+                            Timestamp
                         </TableCell>
                         <TableCell align="center">
-                            Timestamp
+                            Type
                         </TableCell>
                         <TableCell align="center">
                             ReadyState
@@ -39,11 +39,11 @@ export default class EventList extends React.Component<Partial<EventListProps>, 
                 </TableHead>
                 <TableBody>
                     {
-                        this.props.events?.map((event: Event, idx:number): ReactElement => {
+                        this.props.events?.map((event: Partial<Event>, idx: number): ReactElement => {
                             const eventTarget: HTMLVideoElement = event.target as HTMLVideoElement;
                             return <TableRow key={idx}>
                                 <TableCell>
-                                    {event.timeStamp}
+                                    {Math.round(event.timeStamp ?? 0)}
                                 </TableCell>
                                 <TableCell>
                                     {event.type}
