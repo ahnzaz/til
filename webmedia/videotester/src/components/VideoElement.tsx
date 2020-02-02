@@ -1,4 +1,5 @@
 import React from 'react';
+import EventList from './EventList';
 import PauseButton from './PauseButton';
 import PlayButton from './PlayButton';
 import SourceInput from './SourceInput';
@@ -9,14 +10,16 @@ type VideoElementProps = {
     controls?: boolean,
 }
 
-type VideoElementState = VideoElementProps &{
-    playing:boolean;
+type VideoElementState = VideoElementProps & {
+    playing: boolean;
+    events: Event[];
 }
 
-const defaultState:Partial<VideoElementState> = {
+const defaultState: Partial<VideoElementState> = {
     source: "https://www.w3schools.com/html/mov_bbb.mp4",
     controls: false,
-    playing:false,
+    playing: false,
+    events: [],
 }
 
 export default class VideoElement extends React.Component<Partial<VideoElementProps>, Partial<VideoElementState>> implements Partial<HTMLVideoElement>{
@@ -29,33 +32,46 @@ export default class VideoElement extends React.Component<Partial<VideoElementPr
             ...defaultState,
             ...props,
         };
-        
+
         this.play = this.play.bind(this);
         this.pause = this.pause.bind(this);
+
+        this._eventListener = this._eventListener.bind(this);
     }
+
+    private _eventListener(event: Event) {
+        this.setState((state: Partial<VideoElementState>): Partial<VideoElementState> => {
+            return {
+                events: [...state.events || [], event]
+            }
+        })
+    };
 
     render() {
         return <div>
-            <VideoDisplay source={this.state.source} controls={this.props.controls} playing={this.state.playing}></VideoDisplay>
+            <VideoDisplay source={this.state.source} controls={this.props.controls} playing={this.state.playing} eventListener={this._eventListener}></VideoDisplay>
             <SourceInput onClick={(source: string): void => this.setSrc(source)}></SourceInput>
             <div>
                 <PlayButton onClick={this.play}></PlayButton>
                 <PauseButton onClick={this.pause}></PauseButton>
             </div>
+            <div>
+                <EventList events={this.state.events}></EventList>
+            </div>
         </div>
     }
 
-    public play():Promise<void>{
+    public play(): Promise<void> {
         this.setState({
-            playing:true,
+            playing: true,
         });
 
         return Promise.resolve();
     }
 
-    public pause():void{
+    public pause(): void {
         this.setState({
-            playing:false,
+            playing: false,
         })
     }
 
