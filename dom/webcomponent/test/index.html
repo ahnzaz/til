@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<head>
+    <title>
+        Web component test
+    </title>
+</head>
+
+<body>
+    <template id='my-template'>
+        <div>
+            <div>
+                <p>Head</p>
+            </div>
+            <slot name='my-content'>
+                <p>content</p>
+            </slot>
+        </div>
+    </template>
+    <div id="container1">
+        <pop-up-info>
+
+        </pop-up-info>
+    </div>
+    <div id="container2">
+        <pop-up-info>
+            <div class='slottable' slot='my-content'>
+                <p>Slotted</p>
+            </div>
+        </pop-up-info>
+    </div>
+    <div id="container3">
+        <pop-up-info>
+
+        </pop-up-info>
+    </div>
+    <script type='text/javascript'>
+        class PopUpInfo extends HTMLElement {
+            constructor() {
+                super();
+
+                const shadowRoot = this.attachShadow({ mode: 'open' });
+
+                shadowRoot.appendChild(document.querySelector('#my-template').content.cloneNode(true));
+            }
+        }
+
+        window.customElements.define('pop-up-info', PopUpInfo);
+    </script>
+</body>
