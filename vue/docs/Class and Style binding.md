@@ -22,3 +22,23 @@ Class와 style에 `v-bind`를 사용할 때 특별한 기능이 있음
 
 
 ## Inline style binding
+### 객체 구문
+```html
+<div v-bind:style="{ color:activeColor, fontSize:fontSize+ 'px'}"></div>
+```
+
+스타일 객체에 직접 바인딩하여 템플릿을 깔끔하게 유지하는것이 좋음
+
+### 배열 구문
+```html
+<div v-bind:style="[baseStyles, overridingStyles]"></div>
+```
+
+### 자동 접두사
+벤더 접두어가 필요한 속성을 사용하면 자동으로 해당 접두어를 감지하여 스타일을 적용함.
+
+### 다중 값 제공
+스타일 속성에 접두사가 있는 여러 값을 배열로 전달할 수 있음.
+```html
+<div v-bind:style="{display : ['-webkit-box', '-ms-flexbox', 'flex']}"></div>
+```
