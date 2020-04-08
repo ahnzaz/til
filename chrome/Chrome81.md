@@ -1,5 +1,23 @@
-# Chrome 81
-## DevTools
+# [New in Chrome 81](https://www.youtube.com/watch?v=ihjL0mcnlQs&feature=push-u-sub&attr_tag=KAAm46oYEKL3kr-1%3A6)
+
+## Chrome release schedule 변경
+- Chrome 82는 스킵
+- 83이 5월 중순 릴리즈
+
+## App Icon Badging
+WebApp Icon badging 기능을 stable하게 쓸 수 있게됨
+
+## Hit testing for AR
+WebXR API에서 Hit Test를 할 수 있게 됨
+
+## Web NFC on origin trial
+
+## More
+- Media session API support tracking position
+- Intel API support localization language, currency
+- TLS 1.0, 1.1 제거는 연기됨, 83에서 제거될 예정
+
+# DevTools
 ### Moto G4 support in Device Mode
 - Moto G4가 뭐길레 영상까지?
 
