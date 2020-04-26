@@ -40,9 +40,10 @@ module.exports = function () {
         devServer: {
             publicPath: "/dist/",
             contentBase: path.join(__dirname, './static'),
+            open: true,
             port: 8080,
-            inline: true,
             hot: true,
+            inline: true,
         }
     }
 }

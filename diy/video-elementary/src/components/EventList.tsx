@@ -43,7 +43,7 @@ export default class EventList extends React.Component<Partial<EventListProps>, 
                             const eventTarget: HTMLVideoElement = event.target as HTMLVideoElement;
                             return <TableRow key={idx}>
                                 <TableCell>
-                                    {Math.round(event.timeStamp ?? 0)}
+                                    {`${Math.round(event.timeStamp ?? 0)}, (${Math.round((event.timeStamp ?? 0) - (this.props.events?.[0].timeStamp ?? 0))})`}
                                 </TableCell>
                                 <TableCell>
                                     {event.type}
