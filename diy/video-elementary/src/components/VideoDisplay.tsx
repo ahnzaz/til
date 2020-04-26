@@ -1,6 +1,8 @@
 import React from 'react';
 import { videoElementEventsMap } from '../types/VideoElementEvents';
 
+export type PreloadState = 'none' | 'metadata' | 'auto'
+
 export type VideoDisplayProperties = {
     autoplay: boolean
     source: string,
@@ -8,22 +10,26 @@ export type VideoDisplayProperties = {
     loop: boolean,
     playing: boolean,
     disablePictureInPicture: boolean,
-    crossOrigin: string | undefined,
+    crossOrigin: string,
     playsInline: boolean,
+    muted: boolean,
+    preload: PreloadState
+    poster: string
     eventListener: (event: Event) => void;
 }
 
 
-export type VideoDisplayState = VideoDisplayProperties & {
+export type VideoDisplayState = Partial<VideoDisplayProperties> & {
 }
 
 export const defaultProperties: Partial<VideoDisplayProperties> = {
-    autoplay: false,
-    controls: true,
-    loop: false,
-    disablePictureInPicture: false,
-    crossOrigin: undefined,
-    playsInline: false
+    // autoplay: false,
+    // controls: true,
+    // loop: false,
+    // disablePictureInPicture: false,
+    // crossOrigin: undefined,
+    // playsInline: false,
+    muted: true,
 }
 
 export default class VideoDisplay extends React.Component<Partial<VideoDisplayProperties>> {
@@ -51,6 +57,10 @@ export default class VideoDisplay extends React.Component<Partial<VideoDisplayPr
             crossOrigin={this.props.crossOrigin}
             disablePictureInPicture={this.props.disablePictureInPicture}
             loop={this.props.loop}
+            muted={this.props.muted}
+            preload={this.props.preload}
+            poster={this.props.poster}
+
 
             src={this.props.source}></video>;
     }

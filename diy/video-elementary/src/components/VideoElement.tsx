@@ -10,10 +10,11 @@ import StatesGrid from './states/StatesGrid';
 import VideoDisplay from './VideoDisplay';
 
 type VideoElementProps = {
-    source?: string,
+    source: string,
     controls?: boolean,
     autoplay: boolean,
     loop: boolean,
+    muted: boolean
 }
 
 type VideoElementState = VideoElementProps & {
@@ -70,7 +71,9 @@ export default class VideoElement extends React.Component<Partial<VideoElementPr
                 source={this.state.source}
                 controls={this.state.controls}
                 playing={this.state.playing}
-                eventListener={this._eventListener}></VideoDisplay>
+                eventListener={this._eventListener}
+                muted={this.state.muted}
+            />
             <SourceInput onClick={(source: string): void => this.setSrc(source)}></SourceInput>
             <div>
                 <PlayButton onClick={this.play}></PlayButton>
@@ -96,9 +99,17 @@ export default class VideoElement extends React.Component<Partial<VideoElementPr
                         control={
                             <Checkbox
                                 onChange={this.setLoop.bind(this)}
-                                value="loop" />
+                            />
                         }
                         label="loop"
+                    />
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                onChange={this.setMuted.bind(this)}
+                            />
+                        }
+                        label="muted"
                     />
                 </FormGroup>
             </div>
@@ -111,6 +122,11 @@ export default class VideoElement extends React.Component<Partial<VideoElementPr
         </div>
     }
 
+    private setMuted(_: any, muted: boolean): void {
+        this.setState({
+            muted,
+        })
+    }
     private setAutoplay(_: any, autoplay: boolean): void {
         this.setState({
             autoplay
