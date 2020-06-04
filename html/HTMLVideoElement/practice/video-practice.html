@@ -8,14 +8,24 @@
     <title>Native video player</title>
     <meta name="description" content="The HTML5 Herald">
     <meta name="author" content="SitePoint">
+    <style type="text/css">
+        video::-webkit-media-controls-panel {
+            display: none;
+        }
 
-    <link rel="stylesheet" href="css/styles.css?v=1.0">
+        .videocontrols{
+            display: none;
+        }
+
+        div.media-controls-container {
+            display: none;
+        }
+    </style>
 
 </head>
 
 <body>
-    <video muted controls width="1280" height="720">
-        <source src="/Volumes/Public/videos/8k_mkv_vp9_aac.mkv" />
+    <video muted controls width="640" height="480" src="https://www.w3schools.com/html/mov_bbb.mp4">
     </video>
     <script type="text/javascript">
     </script>
