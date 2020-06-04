@@ -1,0 +1,40 @@
+div {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+div.container {
+    float: none;
+    width: 400px;
+}
+
+div.container:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+div.left:before {
+    content: 'left';
+}
+
+div.left {
+    float: left;
+    width: 100px;
+    height: 20px;
+}
+
+div.right:before {
+    content: 'right';
+}
+
+div.right {
+    float: right;
+    width: 100px;
+    height: 20px;
+}
+
+div.center:before {
+    content: 'center';
+}
