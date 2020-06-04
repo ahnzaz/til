@@ -1,5 +1,5 @@
 {
-  "name": "hlsjs-test",
+  "name": "video-practice",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,11 +7,5 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "hls.js": "^0.12.4"
-  },
-  "devDependencies": {
-    "@types/hls.js": "^0.12.3"
-  }
+  "license": "ISC"
 }
