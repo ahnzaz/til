@@ -39,5 +39,14 @@ X2JS : XML <-> JSON converter
 ## `.schedule()`
 - 스케쥴 콜백
 
+최초 fragment 요청 : `INITIAL_FRAGMENT_NEEDED`
+
 # Stream
 # Stream processor
+
+# SourceBufferSink : SourceBuffer wrapper?
+
+# Representation Handler
+
+# DashHandler
+- DashManifest 처리기
