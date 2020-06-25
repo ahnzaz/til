@@ -1,6 +1,8 @@
 # Entry point
 - MediaPlayer
 
+- MediaPlayer.initialize -> StreamController.load() -> ManifestLoader async success -> XLinkController.resolveManifestOnLoad() (Manifest resolve) -> `XLINK_READY` event -> ManifestLoader.onXlinkReady() -> `INTERNAL_MANIFEST_LOADED` event -> ManifestUpdate.update() 최초 manifest update -> TimeSyncController.initialize() -> `TIME_SYNCHRONIZATION_COMPLETED` event -> (ProtectionController 호출) -> StreamController.composeStreams() 스트림 구성 -> StreamController.switchStream() 특정 스트림으로 변경 -> openMediaSource() -> onMediaSourceOpen -> `SOURCE_INITIALIZED` event -> StreamController.activeStream() -> PlaybackController.play()
+
 # StreamController
 - load(manifest)
 - autoplay 관장
