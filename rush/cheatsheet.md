@@ -16,9 +16,11 @@
 ### shrinkwrap 파일이란?
 semversion으로 기록된 의존성은 설치 당시 최신 버전에 따라 실제 설치되는 패키지가 다르다. shrinkwrap file은 git으로 추적 가능한 큰 파일을 통해 이러한 문제를 회피할 수 있도록 버전 변경을 기록한다.
 
+### `rush install`
+shrinkwrap 파일을 기반으로 의존성 패키지를 설치한다.
+
 ## `rush clean`
 생성된 symlink를 모두 제거하여 package간의 의존성 정보를 rush에서 제거한다.
-
 
 ## `rush update --purge`
 모든 symlink를 삭제하고 재 갱신하여 깨진 symlink 상태를 복구한다.
@@ -33,3 +35,6 @@ repository내 모든 package에 대해 clean build를 수행한다.
 `package.json` file을 수정한 후 `rush check`를 수행하면 동일한 library의 다른 버전에 의존성을 가지는지 체크한다.
 
 ## `rush change --verify`
+
+## `rushx`
+`npm run`과 유사하나, error report가 적음
