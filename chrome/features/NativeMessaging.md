@@ -1,0 +1,1 @@
+# [Native messaging](https://developer.chrome.com/docs/apps/nativeMessaging/)
