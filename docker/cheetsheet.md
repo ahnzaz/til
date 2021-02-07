@@ -26,3 +26,6 @@
 
 ### Start container with Mount
 `docker container run --mount type=<type>,source=<sourcepath>,target=<targetpath>`
+
+### ffprobe mount
+`docker run -it --rm --mount type=bind,source=$(pwd),target=/videos sjourdan/ffprobe /videos/`
