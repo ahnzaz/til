@@ -54,3 +54,34 @@ color contrast 확인 가능
 
 ### Customize keyboard shortcuts in DevTools
 DevTools 키보드 단축키 변경 가능
+
+## [DevTools](https://developer.chrome.com/blog/new-in-devtools-84/)
+
+### [Fix site issues with new Issues tab](https://developer.chrome.com/blog/new-in-devtools-84/#issues)
+`Issues` tab에서 사이트 이슈를 요약해서 볼 수 있음
+
+### [View accessibility information in the Inspect Mode tooltip](https://developer.chrome.com/blog/new-in-devtools-84/#a11y)
+Inspect mode tooltip에서 acessibility 관련 name, role, keyboard focusable을 볼 수 있다.
+
+### Performance panel updated
+#### View Total Blocking Time (TBT) information in the footer
+퍼포먼스 패널에서 `Total blocking time`이 표시된다.
+
+#### Layout Shift events in the new Experience section
+`Experience` section에서 Layout shift event를 표시한다.
+
+### More accurate Promise terminology in the Console
+Promise logging시 `resolved`에서 `fulfilled` 용어를 사용한다.
+
+### Style panel updated
+#### Support for `revert` keyword
+
+#### Image previews
+
+#### Color Picker now uses space-separated functional color notation
+`rgb(0, 0, 0) === rgb(0 0 0)`;
+
+#### Deprecation of the `Properties` pane in the Elements panel
+Elements panel에서 `Properties` pane이 사라짐. `console.dir($0)`을 대신 사용할 것
+
+#### App shortcuts support in th Manifest pane
