@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Youtube parser</title>
+</head>
+
+<body>
+    <div id="contaier">
+        <div>
+            <input type="text" value="https://www.youtube.com/watch?v=3eNaaGx2jrc"/>
+            <button id="submit">Parse</button>
+        </div>
+        <div>
+            <p class="response"></p>
+        </div>
+    </div>
+    <script type="text/javascript" src="./js/bundle.js"></script>
+    <script type="text/javascript">
+        document.querySelector('button')
+            .addEventListener('click', async () => {
+                const videoUrl = document.querySelector('input')?.value;
+
+                const meta = await window.parseYoutube(videoUrl);
+
+                document.querySelector('p.response').innerText = JSON.stringify(meta, null, 2);
+            })
+    </script>
+</body>
+
+</html>
